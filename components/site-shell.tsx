@@ -1,6 +1,6 @@
 'use client';
 
-import { BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Keyboard, Layers3, Menu, MessageSquareText, PackageOpen, ShoppingBag, Wrench, X } from 'lucide-react';
+import { ArrowRight, BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Keyboard, Layers3, Menu, MessageSquareText, PackageOpen, ShoppingBag, Wrench, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
@@ -72,6 +72,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               className={active ? 'nav-link is-active' : 'nav-link'}
               aria-current={active ? 'location' : undefined}>
               <span className="motion-icon"><Icon size={17} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span>
+              {active && <ArrowRight className="nav-current-arrow" size={13} strokeWidth={1.7} aria-hidden="true" />}
             </Link>
           );
         })}
@@ -86,10 +87,16 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <Link className="sidebar-brand" href="/" aria-label="Go to overview"><ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}</Link>
         <nav className="sidebar-group" aria-label="Explore">
           <p className="sidebar-group-label">Explore</p>
-          {explore.map(({ label, icon: Icon, route }) => (
-            <Link className={pathname.startsWith(route) ? 'nav-link is-active' : 'nav-link'} aria-current={pathname.startsWith(route) ? 'page' : undefined}
-              href={route} key={route} onClick={() => setMenuOpen(false)}><span className="motion-icon"><Icon size={15} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span></Link>
-          ))}
+          {explore.map(({ label, icon: Icon, route }) => {
+            const active = pathname.startsWith(route);
+            return (
+              <Link className={active ? 'nav-link is-active' : 'nav-link'} aria-current={active ? 'page' : undefined}
+                href={route} key={route} onClick={() => setMenuOpen(false)}>
+                <span className="motion-icon"><Icon size={15} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span>
+                {active && <ArrowRight className="nav-current-arrow" size={13} strokeWidth={1.7} aria-hidden="true" />}
+              </Link>
+            );
+          })}
         </nav>
         {nav()}
         <div className="sidebar-group sidebar-lab" aria-label="Planned interactive tools">
