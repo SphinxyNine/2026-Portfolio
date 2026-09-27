@@ -3,13 +3,13 @@ import { PageIntro } from '@/components/page-intro';
 import { ProjectsContent } from '@/components/portfolio-sections';
 
 export const metadata: Metadata = {
-  title: 'Projects', description: 'Project details and screenshots are being prepared.',
+  title: 'Projects', description: 'Selected client work across websites, funnels, CRM systems, and automation.',
   alternates: { canonical: '/work/' },
 };
 export default function Page() {
   return (
     <div className="page">
-      <PageIntro eyebrow="Portfolio" title="Projects" description="Project details and screenshots are being prepared." />
+      <PageIntro eyebrow="Portfolio" title="Projects" description="Selected client work across websites, funnels, CRM systems, and automation." />
       <ProjectsContent />
     </div>
   );

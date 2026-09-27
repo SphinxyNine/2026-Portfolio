@@ -4,6 +4,7 @@ import { useSyncExternalStore } from 'react';
 
 export const themeKey = 'portfolio-theme';
 const themeEvent = 'portfolio-theme-change';
+export type ThemePreference = 'system' | 'light' | 'dark';
 
 function getSnapshot(): 'light' | 'dark' {
   return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
@@ -16,6 +17,9 @@ function storedTheme() {
     const value = localStorage.getItem(themeKey);
     return value === 'light' || value === 'dark' ? value : null;
   } catch { return null; }
+}
+function getPreferenceSnapshot(): ThemePreference {
+  return storedTheme() || 'system';
 }
 function subscribe(onChange: () => void) {
   const media = window.matchMedia('(prefers-color-scheme: dark)');
@@ -37,13 +41,18 @@ function subscribe(onChange: () => void) {
 }
 export function useTheme() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, () => 'light' as const);
-  function setTheme(next: 'light' | 'dark') {
-    document.documentElement.dataset.theme = next;
-    try { localStorage.setItem(themeKey, next); } catch { /* Keep session theme if storage is unavailable. */ }
+  const preference = useSyncExternalStore(subscribe, getPreferenceSnapshot, () => 'system' as const);
+  function setPreference(next: ThemePreference) {
+    document.documentElement.dataset.theme = next === 'system' ? systemTheme() : next;
+    try {
+      if (next === 'system') localStorage.removeItem(themeKey);
+      else localStorage.setItem(themeKey, next);
+    } catch { /* Keep the current session theme if storage is unavailable. */ }
     window.dispatchEvent(new Event(themeEvent));
   }
+  function setTheme(next: 'light' | 'dark') { setPreference(next); }
   function toggleTheme() {
     setTheme(getSnapshot() === 'dark' ? 'light' : 'dark');
   }
-  return { theme, setTheme, toggleTheme };
+  return { theme, preference, setPreference, setTheme, toggleTheme };
 }

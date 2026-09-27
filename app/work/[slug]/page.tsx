@@ -23,7 +23,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const facts = [['Client', project.client], ['Role', project.role], ['Year', project.year]].filter(([, value]) => value);
   return (
     <article className="page case-study">
-      <Link className="back-link" href="/#projects"><ArrowLeft size={16} /> Back to projects</Link>
+      <Link className="back-link" href="/work"><ArrowLeft size={16} /> Back to projects</Link>
       <header className="case-study-header">
         <p className="eyebrow">{project.category}</p>
         <h1>{project.title}</h1>
@@ -38,7 +38,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {project.screenshots.length ? project.screenshots.map((shot) => <Image key={shot.src} className="case-study-screenshot" src={shot.src} alt={shot.alt} width={1280} height={800} />) : (
         <div className="case-study-visual"><ImageIcon size={28} aria-hidden="true" /><p>Screenshot to follow</p></div>
       )}
-      {!!project.responsibilities.length && <section className="case-study-body"><h2>Responsibilities</h2><ul>{project.responsibilities.map((item) => <li key={item}>{item}</li>)}</ul></section>}
+      {!!project.responsibilities.length && <section className="case-study-body"><h2>Responsibilities</h2><ul className="experience-responsibilities">{project.responsibilities.map((item) => <li key={item}>{item}</li>)}</ul></section>}
       <div className="case-study-body">{project.sections.map((section) => <section key={section.title}><h2>{section.title}</h2><p>{section.body}</p></section>)}</div>
     </article>
   );

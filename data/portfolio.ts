@@ -8,17 +8,17 @@ export type Project = {
 };
 
 export const profile = {
-  name: 'Zyron Jade Fausto', shortName: 'Zyron Fausto', initials: 'ZF',
+  name: 'Zy Fausto', shortName: 'Zy Fausto',
   title: 'Web Developer & Automation Specialist',
   expertise: ['Web Development', 'Funnels', 'CRM', 'Automation'],
   location: 'Philippines', photo: '/profile/dazayy.jpeg',
-  photoAlt: 'Illustrated character avatar chosen by Zyron Jade Fausto',
+  photoAlt: 'Illustrated character avatar chosen by Zy Fausto',
   email: 'jade.fausto17@gmail.com',
   resume: '', // Add only the updated, approved résumé.
   introduction: "I build responsive websites, funnels, CRM workflows, and business automations. My work combines development, GoHighLevel, integrations, analytics, and practical technical support.",
   socials: { linkedin: 'https://linkedin.com/in/zyron-fausto/', github: 'https://github.com/SphinxyNine' },
   seo: {
-    description: 'Portfolio of Zyron Jade Fausto, a web developer and automation specialist working with websites, funnels, CRM systems, integrations, and digital automation.',
+    description: 'Portfolio of Zy Fausto, a web developer and automation specialist working with websites, funnels, CRM systems, integrations, and digital automation.',
     canonical: 'https://professional-portfolio.golivedigital-jz.chatgpt.site',
   },
 };
@@ -42,7 +42,21 @@ function projectDraft(slug: string, client: string, title: string, category: str
     tools: [], screenshots: [], liveUrl: '', caseStudyUrl: '', sections: [] };
 }
 export const projects: Project[] = [
-  projectDraft('morocco-expedition', 'Bear Grylls Survival Academy', 'Morocco Expedition Funnel', 'Funnels & CRM'),
+  {
+    slug: 'morocco-expedition', enabled: true, placeholder: false, visibility: 'public',
+    title: 'Funnel & CRM Implementation', client: 'Bear Grylls Survival Academy', year: '2026', category: 'Funnels & CRM',
+    summary: 'GoHighLevel campaign funnels, booking workflows, CRM automation, and conversion tracking for expedition products.',
+    role: 'Web & Automation Specialist',
+    responsibilities: [
+      'Developed and maintained campaign landing, reservation, confirmation, and supporting pages.',
+      'Implemented inquiry and booking workflows, CRM tagging, lead notifications, and automated follow-ups.',
+      'Built responsive custom sections and refined layouts from stakeholder feedback.',
+      'Supported GA4 and Google Tag Manager events with UTM-based attribution.',
+      'Managed content updates, image optimization, launch preparation, and iterative revisions.',
+    ],
+    tools: ['GoHighLevel', 'HTML', 'CSS', 'JavaScript', 'GA4', 'Google Tag Manager'],
+    screenshots: [], liveUrl: '', caseStudyUrl: '', sections: [],
+  },
   projectDraft('novectus-medical', 'Novectus Medical Corporation', 'ActiGraft / Medical Website', 'Web development'),
   projectDraft('linkfreight-express', 'Linkfreight Express International', 'Corporate Website', 'Web development'),
   projectDraft('airbridge-freight', 'Airbridge Freight International', 'Corporate Website', 'Web development'),
@@ -56,6 +70,27 @@ export type Experience = {
   current: boolean | null; statusNote?: string;
 };
 export const experience: Experience[] = [
+  {
+    company: '5KeysSolution', role: 'Web & Automation Specialist',
+    startDate: 'February 2026', endDate: '', current: true, location: 'Remote',
+    summary: 'Building GoHighLevel funnels, CRM workflows, tracking systems, and responsive client experiences.',
+    responsibilities: [
+      'Build and maintain responsive landing pages, funnels, and campaign pages in GoHighLevel for client projects, including Bear Grylls Survival Academy.',
+      'Configure CRM workflows, forms, pipelines, tags, lead routing, booking flows, and automated follow-ups from campaign and operational requirements.',
+      'Develop and customize page functionality with HTML, CSS, and JavaScript across desktop, tablet, and mobile.',
+      'Implement and maintain GA4, Google Tag Manager, UTM tracking, and conversion events for lead-generation and booking funnels.',
+      'Translate client feedback and business requirements into technical updates from initial build through launch and post-launch improvements.',
+      'Optimize media assets, page structure, and frontend performance while maintaining brand and design consistency.',
+    ],
+    tools: ['GoHighLevel', 'CRM', 'Funnels', 'Workflows', 'Pipelines', 'HTML', 'CSS', 'JavaScript', 'GA4', 'GTM'],
+  },
+  {
+    company: 'GoLive Digital Solutions', role: 'Founder',
+    startDate: 'June 2026', endDate: '', current: true, location: 'Remote',
+    summary: 'Founded an independent freelance practice focused on web development and business automation.',
+    responsibilities: ['Business ownership', 'Freelance web development', 'Client automation projects'],
+    tools: ['Web development', 'Automation'],
+  },
   {
     company: 'Zeta Dev X / Freelance Development', role: 'Fullstack Web Developer',
     startDate: 'May 2024', endDate: '', current: null,
@@ -86,9 +121,9 @@ export function experiencePeriod(item: Experience) {
 
 export const skills = [
   { title: 'Web development', items: ['HTML', 'CSS', 'JavaScript', 'React', 'Node.js', 'MongoDB', 'Git', 'GitHub'], pending: [] as string[] },
-  { title: 'Funnels & CRM', items: ['GoHighLevel', 'Landing pages', 'Forms', 'CRM workflows'], pending: ['Pipelines'] },
-  { title: 'Automation & integration', items: ['Business automation', 'Integrations'], pending: ['ManyChat', 'Webhooks', 'Google Sheets', 'API integrations'] },
-  { title: 'Analytics', items: ['Analytics implementation'], pending: ['Google Analytics 4', 'Google Tag Manager', 'Meta Pixel', 'Conversion tracking'] },
+  { title: 'Funnels & CRM', items: ['GoHighLevel', 'Landing pages', 'Forms', 'CRM workflows', 'Pipelines'], pending: [] as string[] },
+  { title: 'Automation & integration', items: ['Business automation', 'Integrations', 'Lead routing', 'Automated follow-ups'], pending: ['ManyChat', 'Webhooks', 'Google Sheets', 'API integrations'] },
+  { title: 'Analytics', items: ['Google Analytics 4', 'Google Tag Manager', 'UTM tracking', 'Conversion tracking'], pending: ['Meta Pixel'] },
   { title: 'Design / development tools', items: ['Figma', 'Postman'], pending: ['VS Code', 'Notion', 'Lovable'] },
   { title: 'Other web platforms', items: ['Shopify', 'WordPress', 'Webflow', 'Framer'], pending: [] as string[] },
 ];

@@ -3,10 +3,10 @@
 import { Check, Copy } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { profile } from '@/data/portfolio';
-import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
+import { AnimatedThemeSelector } from '@/components/ui/animated-theme-toggler';
 
 export function ThemeToggle() {
-  return <AnimatedThemeToggler />;
+  return <AnimatedThemeSelector />;
 }
 export function CopyEmail() {
   const [status, setStatus] = useState('');
