@@ -1,6 +1,6 @@
 'use client';
 
-import { BookOpenText, BriefcaseBusiness, FileBadge, Keyboard, Layers3, Menu, MessageSquareText, PackageOpen, ShoppingBag, Wrench, X } from 'lucide-react';
+import { BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Keyboard, Layers3, Menu, MessageSquareText, PackageOpen, ShoppingBag, Wrench, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
@@ -83,7 +83,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     <div className="site-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <aside className="desktop-sidebar" aria-label="Profile and navigation">
-        <Link className="sidebar-brand" href="/" aria-label="Go to overview">{profile.shortName}</Link>
+        <Link className="sidebar-brand" href="/" aria-label="Go to overview"><ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}</Link>
         <nav className="sidebar-group" aria-label="Explore">
           <p className="sidebar-group-label">Explore</p>
           {explore.map(({ label, icon: Icon, route }) => (
@@ -106,7 +106,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </aside>
       <header className="mobile-header">
         <Link className="mobile-brand" href="/" onClick={() => setMenuOpen(false)} aria-label="Go to overview">
-          {profile.shortName}
+          <ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}
         </Link>
         <button ref={menuButton} className="icon-button menu-button" type="button" onClick={() => setMenuOpen(!menuOpen)}
           aria-expanded={menuOpen} aria-controls="mobile-menu" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>
