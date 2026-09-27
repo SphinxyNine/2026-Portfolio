@@ -1,7 +1,16 @@
-import { ArrowDown, ArrowRight, ArrowUpRight, MapPin } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, BriefcaseBusiness, FileBadge, Layers3, MapPin, PackageOpen, ShoppingBag, Wrench } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { overviewHighlights, plannedPosts, profile } from '@/data/portfolio';
+
+const pagePreviews = [
+  { href: '/work', title: 'Projects', description: 'Client websites, funnels, CRM systems, and automation work.', meta: '6 selected projects', icon: Layers3 },
+  { href: '/skills', title: 'Tech stack', description: 'Tools used across development, GoHighLevel, automation, and analytics.', meta: '6 skill groups', icon: Wrench },
+  { href: '/experience', title: 'Experience', description: 'Current roles at 5KeysSolution and GoLive Digital Solutions, plus earlier work.', meta: '5 roles', icon: BriefcaseBusiness },
+  { href: '/credentials', title: 'Certifications', description: 'Professional training, certification, and computer science education.', meta: '3 credentials', icon: FileBadge },
+  { href: '/resources', title: 'Resources', description: 'A planned collection of useful references, tools, and implementation guides.', meta: 'Coming soon', icon: PackageOpen },
+  { href: '/shop', title: 'Shop', description: 'Resume and website templates currently being prepared.', meta: 'Coming soon', icon: ShoppingBag },
+];
 export default function HomePage() {
   return (
     <div className="page home-page">
@@ -27,11 +36,28 @@ export default function HomePage() {
           {overviewHighlights.map((item) => <li key={item.value}><strong>{item.value}</strong><span>{item.label}</span></li>)}
         </ul>
       </section>
+      <section className="landing-pages" aria-labelledby="landing-pages-heading">
+        <header className="section-heading">
+          <span className="section-index" aria-hidden="true">01</span>
+          <h2 id="landing-pages-heading">Explore</h2>
+        </header>
+        <div className="page-preview-grid">
+          {pagePreviews.map(({ href, title, description, meta, icon: Icon }) => (
+            <Link className="page-preview-card animated-control" href={href} key={href}>
+              <span className="page-preview-icon motion-icon" aria-hidden="true"><Icon size={17} strokeWidth={1.5} /></span>
+              <span className="page-preview-meta">{meta}</span>
+              <h3>{title}</h3>
+              <p>{description}</p>
+              <span className="page-preview-action">Open page <ArrowRight size={14} /></span>
+            </Link>
+          ))}
+        </div>
+      </section>
       <section id="build-log" className="build-log" aria-labelledby="build-log-heading">
         <header className="section-heading build-log-heading">
-          <span className="section-index" aria-hidden="true">00</span>
+          <span className="section-index" aria-hidden="true">02</span>
           <h2 id="build-log-heading">Build log</h2>
-          <span className="draft-badge">Planned writing</span>
+          <Link className="inline-link build-log-link" href="/blog">View blog <ArrowRight size={14} /></Link>
         </header>
         <div className="post-list">
           {plannedPosts.map((post) => (

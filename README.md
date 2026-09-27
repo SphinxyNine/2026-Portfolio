@@ -15,7 +15,7 @@ The static output is in `out/`. The existing Sites identity is in `.openai/hosti
 
 ## Structure
 
-The homepage is a focused overview with a split portrait introduction, focus strip, and planned build-log topics. Projects, Tech stack, Experience, and Certifications each use a dedicated page linked directly from the sidebar. Resources, Blog, Shop, Ask anything, and Typing test are visibly marked as planned instead of linking to empty pages. The Zy Fausto wordmark returns to the overview. Additional `/about/` and `/contact/` routes remain available with shared content. Project details use `/work/[slug]/`.
+The homepage is a focused overview with a split portrait introduction, focus strip, compact previews for the portfolio pages, and planned build-log topics. Projects, Tech stack, Experience, Certifications, Resources, Blog, and Shop each use a dedicated page linked directly from the sidebar. The three newer pages use clear placeholder states while their content is prepared. Ask anything and Typing test remain visibly marked as planned. The Zy Fausto wordmark returns to the overview. Additional `/about/` and `/contact/` routes remain available with shared content. Project details use `/work/[slug]/`.
 
 - `data/portfolio.ts`: all profile, project, experience, tech-stack, and credential data.
 - `components/portfolio-sections.tsx`: content shared by home sections and standalone routes.
@@ -41,6 +41,6 @@ Keep `profile.resume` empty until an updated, approved PDF is placed in `public/
 
 ## Appearance and interactions
 
-No gradients, blur, glass effects, or continuous animation. Light mode uses a neutral near-white; dark mode uses Carbon Black. The browser's system theme is used initially, and manual choices persist when local storage is available. Clipboard failure leaves the full email visible with manual-copy guidance. Lucide icons use short hover and keyboard-focus transforms. Reduced-motion preferences disable smooth scrolling, transitions, and decorative movement.
+No gradients, blur, glass effects, or continuous animation. Light mode uses a neutral near-white; dark mode uses Carbon Black. The browser's system theme is used initially, and manual choices persist when local storage is available. Clipboard failure leaves the full email visible with manual-copy guidance. The email uses an animated Lucide mail icon; LinkedIn and GitHub use locally rendered MIT-licensed Tabler brand outlines. Icons use short hover and keyboard-focus transforms. Reduced-motion preferences disable smooth scrolling, transitions, and decorative movement.
 
 The compact system/light/dark selector uses the supplied Magic UI View Transitions approach, adapted to the existing theme store without extra dependencies. It reveals a changed theme in a 450ms circle from the selected control on desktop and mobile. Reduced motion and browsers without the API use an immediate switch. Rapid clicks are ignored until the active reveal completes, and interrupted transitions clean up their snapshots.

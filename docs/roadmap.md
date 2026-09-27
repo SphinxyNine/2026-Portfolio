@@ -12,9 +12,9 @@ This file records the requested expansion work without presenting unfinished fea
 
 ## New pages
 
-- Resources: curated development and automation references.
-- Blog: start with the three topics shown in the landing-page build log.
-- Shop: résumé and website templates, including license, preview, checkout, and support details.
+- Resources: route and placeholder are live; curated development and automation references remain to be added.
+- Blog: route, placeholder, and first three planned topics are live; article content remains to be written.
+- Shop: route and placeholder are live; résumé and website templates still need licenses, previews, checkout, and support details.
 - Tools: useful small utilities such as a privacy-safe PDF editor.
 - Playground: a typing test or another small interactive experiment.
 

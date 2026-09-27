@@ -318,7 +318,7 @@ export function AnimatedThemeSelector({ duration = 450 }: { duration?: number })
       {themeChoices.map(({ value, label, icon: Icon }) => (
         <button key={value} type="button" className="theme-choice" aria-label={label} title={label}
           aria-pressed={preference === value} onClick={(event) => void select(value, event.currentTarget)}>
-          <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
+          <Icon size={14} strokeWidth={1.7} aria-hidden="true" />
         </button>
       ))}
     </div>

@@ -1,10 +1,11 @@
 'use client';
 
-import { ArrowUpRight, BookOpenText, BriefcaseBusiness, CodeXml, FileBadge, Keyboard, Layers3, Menu, MessageSquareText, PackageOpen, ShoppingBag, Wrench, X } from 'lucide-react';
+import { BookOpenText, BriefcaseBusiness, FileBadge, Keyboard, Layers3, Menu, MessageSquareText, PackageOpen, ShoppingBag, Wrench, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { profile } from '@/data/portfolio';
+import { GitHubIcon, LinkedInIcon } from './brand-icons';
 import { CopyEmail, ThemeToggle } from './contact-controls';
 
 const navigation = [
@@ -15,9 +16,9 @@ const navigation = [
 ];
 
 const explore = [
-  { label: 'Resources', icon: PackageOpen },
-  { label: 'Blog', icon: BookOpenText },
-  { label: 'Shop', icon: ShoppingBag },
+  { label: 'Resources', icon: PackageOpen, route: '/resources' },
+  { label: 'Blog', icon: BookOpenText, route: '/blog' },
+  { label: 'Shop', icon: ShoppingBag, route: '/shop' },
 ];
 
 const lab = [
@@ -28,8 +29,8 @@ const lab = [
 function SocialLinks() {
   return (
     <div className="sidebar-socials" aria-label="Social links">
-      <a href={profile.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Zy Fausto on LinkedIn">LinkedIn <ArrowUpRight size={14} /></a>
-      <a href={profile.socials.github} target="_blank" rel="noopener noreferrer" aria-label="SphinxyNine on GitHub">GitHub <ArrowUpRight size={14} /></a>
+      <a href={profile.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Zy Fausto on LinkedIn"><span className="social-icon"><LinkedInIcon width={14} height={14} /></span>LinkedIn</a>
+      <a href={profile.socials.github} target="_blank" rel="noopener noreferrer" aria-label="SphinxyNine on GitHub"><span className="social-icon"><GitHubIcon width={14} height={14} /></span>GitHub</a>
     </div>
   );
 }
@@ -83,17 +84,18 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <aside className="desktop-sidebar" aria-label="Profile and navigation">
         <Link className="sidebar-brand" href="/" aria-label="Go to overview">{profile.shortName}</Link>
-        <div className="sidebar-group" aria-label="Planned sections">
-          <p className="sidebar-group-label"><span>Explore</span><small>Coming soon</small></p>
-          {explore.map(({ label, icon: Icon }) => (
-            <div className="sidebar-planned-row" key={label}><span className="motion-icon"><Icon size={17} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span></div>
+        <nav className="sidebar-group" aria-label="Explore">
+          <p className="sidebar-group-label">Explore</p>
+          {explore.map(({ label, icon: Icon, route }) => (
+            <Link className={pathname.startsWith(route) ? 'nav-link is-active' : 'nav-link'} aria-current={pathname.startsWith(route) ? 'page' : undefined}
+              href={route} key={route} onClick={() => setMenuOpen(false)}><span className="motion-icon"><Icon size={15} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span></Link>
           ))}
-        </div>
+        </nav>
         {nav()}
         <div className="sidebar-group sidebar-lab" aria-label="Planned interactive tools">
           <p className="sidebar-group-label"><span>Lab</span><small>In progress</small></p>
           {lab.map(({ label, icon: Icon }) => (
-            <div className="sidebar-planned-row" key={label}><span className="motion-icon"><Icon size={17} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span></div>
+            <div className="sidebar-planned-row" key={label}><span className="motion-icon"><Icon size={15} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span></div>
           ))}
         </div>
         <div className="sidebar-footer">
@@ -121,7 +123,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         {children}
         <footer className="site-footer">
           <p>© {new Date().getFullYear()} {profile.name}</p>
-          <div><a href={profile.socials.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a><a href={profile.socials.github} target="_blank" rel="noopener noreferrer"><CodeXml size={14} aria-hidden="true" /> GitHub</a></div>
+          <div><a href={profile.socials.linkedin} target="_blank" rel="noopener noreferrer"><LinkedInIcon width={14} height={14} /> LinkedIn</a><a href={profile.socials.github} target="_blank" rel="noopener noreferrer"><GitHubIcon width={14} height={14} /> GitHub</a></div>
         </footer>
       </main>
     </div>
