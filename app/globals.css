@@ -78,7 +78,14 @@
   .desktop-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 20; display: flex; flex-direction: column; width: var(--sidebar-width); height: 100dvh; overflow-y: auto; padding: 1.35rem 1rem 0.85rem; background: var(--bg); border-right: 1px solid var(--line); }
   .sidebar-brand { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.65rem 1.1rem; color: var(--text); font-family: var(--font-geist-mono), monospace; font-size: 0.9rem; font-weight: 550; letter-spacing: -0.025em; }
   .sidebar-brand:hover { color: var(--muted); }
-  .brand-mark { color: var(--brand-jade); }
+  .sidebar-brand .brand-mark, .mobile-brand .brand-mark { color: currentColor; transform-origin: 45% 55%; }
+  .sidebar-brand:hover .brand-mark, .sidebar-brand:focus-visible .brand-mark,
+  .mobile-brand:hover .brand-mark, .mobile-brand:focus-visible .brand-mark { animation: clef-brand-hover 520ms cubic-bezier(.2, .8, .2, 1); }
+  @keyframes clef-brand-hover {
+    0%, 100% { transform: translateY(0) rotate(0) scale(1); }
+    40% { transform: translateY(-3px) rotate(-10deg) scale(1.08); }
+    72% { transform: translateY(-1px) rotate(4deg) scale(1.03); }
+  }
   .sidebar-group { display: grid; gap: 0.1rem; border-top: 1px solid var(--line); padding: 0.8rem 0; }
   .sidebar-group-label { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; padding: 0 0.65rem 0.3rem; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; }
   .sidebar-group-label small { font-size: 0.5rem; font-weight: 450; letter-spacing: 0.04em; }
@@ -151,8 +158,7 @@
   .eyebrow, .section-index, .subsection-label { color: var(--muted); font-size: 0.72rem; line-height: 1.5; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; }
   .hero-copy > .eyebrow { display: flex; align-items: center; gap: 0.4rem; }
   .eyebrow span { margin: 0 0.45rem; }
-  .hero-name { display: flex; align-items: center; gap: clamp(0.65rem, 1.5vw, 0.9rem); color: var(--brand-jade); }
-  .hero-name > svg { width: clamp(1.75rem, 1.4rem + 1vw, 2.35rem); height: clamp(1.75rem, 1.4rem + 1vw, 2.35rem); }
+  .hero-name { color: var(--brand-jade); }
   .hero h1 { color: inherit; font-family: var(--font-geist-mono), monospace; font-size: clamp(2rem, 1.48rem + 1.6vw, 3rem); font-weight: 500; letter-spacing: -0.055em; line-height: 1.15; }
   .hero-title { margin-top: 0.6rem; color: var(--text-soft); font-size: clamp(1.1rem, 0.94rem + 0.5vw, 1.4rem); font-weight: 500; line-height: 1.4; }
   .expertise { display: flex; flex-wrap: wrap; margin-top: 1.1rem; column-gap: 0.8rem; row-gap: 0.15rem; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.72rem; }

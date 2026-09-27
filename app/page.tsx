@@ -4,7 +4,6 @@ import {
   ArrowUpRight,
   Award,
   ChartNoAxesCombined,
-  ClefBass,
   GraduationCap,
   MonitorUp,
   Network,
@@ -42,10 +41,7 @@ export default function HomePage() {
             <Image src={profile.photo} alt={profile.photoAlt} fill sizes="(max-width: 700px) 80vw, 380px" priority />
           </figure>
           <div className="hero-copy">
-            <div className="hero-name">
-              <ClefBass className="brand-mark" aria-hidden="true" />
-              <h1 id="intro-heading">{profile.name}</h1>
-            </div>
+            <h1 className="hero-name" id="intro-heading">{profile.name}</h1>
             <p className="hero-title">{profile.title}</p>
             <p className="hero-description">{profile.introduction}</p>
             <ul className="expertise" aria-label="Areas of work">{profile.expertise.map((item) => <li key={item}>{item}</li>)}</ul>
