@@ -1,16 +1,38 @@
-import { ArrowDown, ArrowRight, ArrowUpRight, BriefcaseBusiness, FileBadge, Layers3, MapPin, PackageOpen, ShoppingBag, Wrench } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  Award,
+  ChartNoAxesCombined,
+  GraduationCap,
+  MapPin,
+  MonitorUp,
+  Network,
+  Workflow,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { overviewHighlights, plannedPosts, profile } from '@/data/portfolio';
+import { GitHubContributions } from '@/components/github-contributions';
+import {
+  credentials,
+  experience,
+  experiencePeriod,
+  overviewHighlights,
+  plannedPosts,
+  profile,
+  projects,
+} from '@/data/portfolio';
 
-const pagePreviews = [
-  { href: '/work', title: 'Projects', description: 'Client websites, funnels, CRM systems, and automation work.', meta: '6 selected projects', icon: Layers3 },
-  { href: '/skills', title: 'Tech stack', description: 'Tools used across development, GoHighLevel, automation, and analytics.', meta: '6 skill groups', icon: Wrench },
-  { href: '/experience', title: 'Experience', description: 'Current roles at 5KeysSolution and GoLive Digital Solutions, plus earlier work.', meta: '5 roles', icon: BriefcaseBusiness },
-  { href: '/credentials', title: 'Certifications', description: 'Professional training, certification, and computer science education.', meta: '3 credentials', icon: FileBadge },
-  { href: '/resources', title: 'Resources', description: 'A planned collection of useful references, tools, and implementation guides.', meta: 'Coming soon', icon: PackageOpen },
-  { href: '/shop', title: 'Shop', description: 'Resume and website templates currently being prepared.', meta: 'Coming soon', icon: ShoppingBag },
-];
+const featuredProject = projects.find((project) => !project.placeholder)!;
+const featuredExperience = [experience[0], experience[1], experience[3]];
+const featuredStack = ['GoHighLevel', 'React', 'JavaScript', 'CRM workflows', 'GA4', 'GTM', 'Node.js', 'MongoDB'];
+
+const credentialIcons = {
+  Certification: Award,
+  Training: Network,
+  Education: GraduationCap,
+};
+
 export default function HomePage() {
   return (
     <div className="page home-page">
@@ -36,28 +58,87 @@ export default function HomePage() {
           {overviewHighlights.map((item) => <li key={item.value}><strong>{item.value}</strong><span>{item.label}</span></li>)}
         </ul>
       </section>
-      <section className="landing-pages" aria-labelledby="landing-pages-heading">
-        <header className="section-heading">
+
+      <section className="home-section featured-work" aria-labelledby="featured-work-heading">
+        <header className="section-heading home-section-heading">
           <span className="section-index" aria-hidden="true">01</span>
-          <h2 id="landing-pages-heading">Explore</h2>
+          <h2 id="featured-work-heading">Selected work</h2>
+          <Link className="inline-link section-link" href="/work">All projects <ArrowRight size={14} /></Link>
         </header>
-        <div className="page-preview-grid">
-          {pagePreviews.map(({ href, title, description, meta, icon: Icon }) => (
-            <Link className="page-preview-card animated-control" href={href} key={href}>
-              <span className="page-preview-icon motion-icon" aria-hidden="true"><Icon size={17} strokeWidth={1.5} /></span>
-              <span className="page-preview-meta">{meta}</span>
-              <h3>{title}</h3>
-              <p>{description}</p>
-              <span className="page-preview-action">Open page <ArrowRight size={14} /></span>
-            </Link>
+        <article className="featured-project">
+          <div className="featured-project-copy">
+            <p className="eyebrow">{featuredProject.category} <span>·</span> {featuredProject.year}</p>
+            <p className="project-client">{featuredProject.client}</p>
+            <h3>{featuredProject.title}</h3>
+            <p>{featuredProject.summary}</p>
+            <ul className="tag-list compact-tags" aria-label="Tools used">
+              {featuredProject.tools.slice(0, 6).map((tool) => <li key={tool}>{tool}</li>)}
+            </ul>
+            <Link className="inline-link" href={`/work/${featuredProject.slug}`}>View case study <ArrowRight size={14} /></Link>
+          </div>
+          <div className="project-system" aria-label="Project implementation areas">
+            <div className="system-node"><MonitorUp size={19} aria-hidden="true" /><span>Responsive campaign pages</span></div>
+            <span className="system-connector" aria-hidden="true" />
+            <div className="system-node"><Workflow size={19} aria-hidden="true" /><span>CRM and booking workflows</span></div>
+            <span className="system-connector" aria-hidden="true" />
+            <div className="system-node"><ChartNoAxesCombined size={19} aria-hidden="true" /><span>Analytics and attribution</span></div>
+          </div>
+        </article>
+      </section>
+
+      <section className="home-section" aria-labelledby="experience-preview-heading">
+        <header className="section-heading home-section-heading">
+          <span className="section-index" aria-hidden="true">02</span>
+          <h2 id="experience-preview-heading">Experience</h2>
+          <Link className="inline-link section-link" href="/experience">Full history <ArrowRight size={14} /></Link>
+        </header>
+        <div className="home-experience-list">
+          {featuredExperience.map((item) => (
+            <article className="home-experience-row" key={`${item.company}-${item.role}`}>
+              <p>{experiencePeriod(item)}</p>
+              <h3>{item.role}</h3>
+              <p>{item.company}</p>
+            </article>
           ))}
         </div>
+        <div className="home-stack-preview">
+          <div className="home-stack-header">
+            <p className="subsection-label">Core stack</p>
+            <Link className="inline-link" href="/skills">View all <ArrowRight size={14} /></Link>
+          </div>
+          <ul className="tag-list home-stack-tags" aria-label="Core tools">
+            {featuredStack.map((tool) => <li key={tool}>{tool}</li>)}
+          </ul>
+        </div>
       </section>
-      <section id="build-log" className="build-log" aria-labelledby="build-log-heading">
-        <header className="section-heading build-log-heading">
-          <span className="section-index" aria-hidden="true">02</span>
+
+      <section className="home-section" aria-labelledby="credentials-preview-heading">
+        <header className="section-heading home-section-heading">
+          <span className="section-index" aria-hidden="true">03</span>
+          <h2 id="credentials-preview-heading">Certifications & education</h2>
+          <Link className="inline-link section-link" href="/credentials">View credentials <ArrowRight size={14} /></Link>
+        </header>
+        <div className="home-credential-grid">
+          {credentials.map((credential) => {
+            const Icon = credentialIcons[credential.type];
+            return (
+              <article className="home-credential-card" key={credential.name}>
+                <Icon size={19} strokeWidth={1.5} aria-hidden="true" />
+                <p className="eyebrow">{credential.type}</p>
+                <h3>{credential.name}</h3>
+                <p>{credential.provider}</p>
+                <p className="credential-card-date">{credential.year}</p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="build-log" className="home-section build-log" aria-labelledby="build-log-heading">
+        <header className="section-heading home-section-heading build-log-heading">
+          <span className="section-index" aria-hidden="true">04</span>
           <h2 id="build-log-heading">Build log</h2>
-          <Link className="inline-link build-log-link" href="/blog">View blog <ArrowRight size={14} /></Link>
+          <Link className="inline-link section-link" href="/blog">View blog <ArrowRight size={14} /></Link>
         </header>
         <div className="post-list">
           {plannedPosts.map((post) => (
@@ -67,6 +148,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <GitHubContributions />
     </div>
   );
 }
