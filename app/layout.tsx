@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
-import { ShaderBackground } from '@/components/shader-background';
 import { SiteShell } from '@/components/site-shell';
 import { profile } from '@/data/portfolio';
 import './globals.css';
@@ -34,9 +33,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `(function(){var t;try{t=localStorage.getItem('portfolio-theme')}catch(e){}document.documentElement.dataset.theme=t==='light'||t==='dark'?t:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'})()` }} />
+      </head>
       <body className={GeistSans.className}>
-        <ShaderBackground />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

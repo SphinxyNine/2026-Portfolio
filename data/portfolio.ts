@@ -1,209 +1,96 @@
 export type ProjectVisibility = 'public' | 'limited' | 'private';
-
-export type CaseStudySection = {
-  title: string;
-  body: string;
-};
-
 export type Project = {
-  slug: string;
-  enabled: boolean;
-  placeholder: boolean;
-  visibility: ProjectVisibility;
-  category: string;
-  title: string;
-  summary: string;
-  role: string;
-  tools: string[];
-  objective: string;
-  year: string;
-  image: string;
-  alt: string;
-  liveUrl: string;
-  client: string;
-  responsibilities: string[];
-  outcome: string;
-  sections: CaseStudySection[];
+  slug: string; enabled: boolean; placeholder: boolean; visibility: ProjectVisibility;
+  title: string; client: string; year: string; category: string; summary: string;
+  role: string; responsibilities: string[]; tools: string[];
+  screenshots: { src: string; alt: string }[];
+  liveUrl: string; caseStudyUrl: string; sections: { title: string; body: string }[];
 };
 
 export const profile = {
-  draft: true,
-  name: 'YOUR NAME',
-  initials: 'YN',
-  photo: '',
-  title: 'Web, Funnel & Automation Specialist',
-  shortTitle: 'Digital solutions specialist',
-  location: 'Philippines',
-  availability: '',
-  email: '',
-  resume: '',
-  introduction:
-    'I build websites, funnels, CRM systems, automations, and practical digital solutions for businesses.',
-  socials: {
-    linkedin: '',
-    github: '',
-  },
+  name: 'Zyron Jade Fausto', shortName: 'Zyron Fausto', initials: 'ZF',
+  title: 'Web Developer & Automation Specialist',
+  expertise: ['Web Development', 'Funnels', 'CRM', 'Automation'],
+  location: 'Philippines', photo: '/profile/dazayy.jpeg',
+  photoAlt: 'Illustrated character avatar chosen by Zyron Jade Fausto',
+  email: 'jade.fausto17@gmail.com',
+  resume: '', // Add only the updated, approved résumé.
+  introduction: "I'm a web developer and automation specialist based in the Philippines. I build websites, funnels, CRM workflows, and business automations for client and internal projects. My work includes development, GoHighLevel, integrations, analytics, and technical implementation.",
+  socials: { linkedin: 'https://linkedin.com/in/zyron-fausto/', github: 'https://github.com/SphinxyNine' },
   seo: {
-    description:
-      'Personal portfolio featuring web development, funnels, CRM systems, workflow automation, analytics, and digital implementation projects.',
-    canonical: '',
+    description: 'Portfolio of Zyron Jade Fausto, a web developer and automation specialist working with websites, funnels, CRM systems, integrations, and digital automation.',
+    canonical: 'https://professional-portfolio.golivedigital-jz.chatgpt.site',
   },
 };
 
+// Candidates from the brief. Roles, dates, results, and case studies need approval.
+function projectDraft(slug: string, client: string, title: string, category: string): Project {
+  return { slug, client, title, category, enabled: true, placeholder: true,
+    visibility: 'public', year: '', summary: '', role: '', responsibilities: [],
+    tools: [], screenshots: [], liveUrl: '', caseStudyUrl: '', sections: [] };
+}
 export const projects: Project[] = [
-  {
-    slug: 'funnel-crm',
-    enabled: true,
-    placeholder: true,
-    visibility: 'public',
-    category: 'Funnels & CRM',
-    title: 'A clearer path from inquiry to action.',
-    summary:
-      'Project placeholder for a funnel and CRM implementation. Add the business context, your contribution, and the verified outcome.',
-    role: 'Add your role and responsibilities',
-    tools: ['GoHighLevel', 'CRM', 'Workflow automation'],
-    objective: 'Add the project objective',
-    year: '',
-    image: '',
-    alt: '',
-    liveUrl: '',
-    client: '',
-    responsibilities: [],
-    outcome: '',
-    sections: [],
-  },
-  {
-    slug: 'business-website',
-    enabled: true,
-    placeholder: true,
-    visibility: 'public',
-    category: 'Web development',
-    title: 'A business website built around clarity.',
-    summary:
-      'Project placeholder for a corporate website or product microsite. Describe the audience, requirements, and implementation.',
-    role: 'Add your role and responsibilities',
-    tools: ['HTML', 'CSS', 'JavaScript'],
-    objective: 'Add the project objective',
-    year: '',
-    image: '',
-    alt: '',
-    liveUrl: '',
-    client: '',
-    responsibilities: [],
-    outcome: '',
-    sections: [],
-  },
-  {
-    slug: 'chatbot-automation',
-    enabled: true,
-    placeholder: true,
-    visibility: 'public',
-    category: 'Automation & chatbots',
-    title: 'Less repetition. More useful conversations.',
-    summary:
-      'Project placeholder for a chatbot or workflow automation. Explain the process, integrations, and your responsibilities.',
-    role: 'Add your role and responsibilities',
-    tools: ['ManyChat', 'Webhooks', 'Google Sheets'],
-    objective: 'Add the project objective',
-    year: '',
-    image: '',
-    alt: '',
-    liveUrl: '',
-    client: '',
-    responsibilities: [],
-    outcome: '',
-    sections: [],
-  },
-  {
-    slug: 'selected-client-work',
-    enabled: true,
-    placeholder: true,
-    visibility: 'private',
-    category: 'Digital systems',
-    title: 'Selected client work.',
-    summary: 'Details available upon request.',
-    role: '',
-    tools: [],
-    objective: '',
-    year: '',
-    image: '',
-    alt: '',
-    liveUrl: '',
-    client: '',
-    responsibilities: [],
-    outcome: '',
-    sections: [],
-  },
+  projectDraft('morocco-expedition', 'Bear Grylls Survival Academy', 'Morocco Expedition Funnel', 'Funnels & CRM'),
+  projectDraft('novectus-medical', 'Novectus Medical Corporation', 'ActiGraft / Medical Website', 'Web development'),
+  projectDraft('linkfreight-express', 'Linkfreight Express International', 'Corporate Website', 'Web development'),
+  projectDraft('airbridge-freight', 'Airbridge Freight International', 'Corporate Website', 'Web development'),
+  projectDraft('homebuddy-ph', 'HomeBuddy PH', 'ManyChat / Automation System', 'Automation'),
+  projectDraft('golive-digital', 'GoLive Digital Solutions', 'Web / Digital Systems', 'Web development & automation'),
 ];
 
-export const experience = [
+export type Experience = {
+  company: string; role: string; startDate: string; endDate: string; location: string;
+  summary: string; responsibilities: string[]; tools: string[];
+  current: boolean | null; statusNote?: string;
+};
+export const experience: Experience[] = [
   {
-    period: 'DATES TO ADD',
-    role: 'Your current professional role',
-    company: 'Company / organization',
-    description:
-      'Add a short description of your scope, the systems you work on, and your responsibilities.',
-    tools: [] as string[],
-    placeholder: true,
+    company: 'Zeta Dev X / Freelance Development', role: 'Fullstack Web Developer',
+    startDate: 'May 2024', endDate: '', current: null,
+    statusNote: 'Listed as ongoing in the previous résumé; current status to confirm.',
+    location: 'Remote',
+    summary: 'Developed responsive websites for small businesses. Worked with clients to gather requirements and implement their websites.',
+    responsibilities: ['Web development', 'Client requirements'], tools: ['React', 'Node.js', 'MongoDB'],
   },
   {
-    period: 'DATES TO ADD',
-    role: 'Your previous role or independent work',
-    company: 'Company / independent',
-    description:
-      'Add relevant earlier experience and the type of work you delivered.',
-    tools: [] as string[],
-    placeholder: true,
+    company: 'GCF South Metro International School', role: 'IT Specialist',
+    startDate: 'February 2023', endDate: 'May 2024', current: false, location: 'Las Piñas',
+    summary: 'Managed network configurations, supported a Google Workspace migration, and maintained school devices. Provided technical support and laptop repairs.',
+    responsibilities: ['Network administration', 'Device maintenance', 'Technical support'],
+    tools: ['Google Workspace', 'VLANs', 'Firewalls'],
+  },
+  {
+    company: 'GCF South Metro Church', role: 'Youth Ministry Head Tech Volunteer',
+    startDate: 'March 2020', endDate: 'January 2025', current: false, location: 'Las Piñas',
+    summary: 'Led the volunteer technical team for live events. Supported audio, video, and streaming systems, and trained volunteers in troubleshooting.',
+    responsibilities: ['Volunteer training', 'Live event support'], tools: ['Audio / video systems', 'Live streaming'],
   },
 ];
+export function experiencePeriod(item: Experience) {
+  if (item.current) return `${item.startDate} – Present`;
+  if (item.endDate) return `${item.startDate} – ${item.endDate}`;
+  return `From ${item.startDate}`;
+}
 
 export const skills = [
-  {
-    title: 'Web development',
-    description: 'Responsive interfaces and maintainable web experiences.',
-    items: ['HTML', 'CSS', 'JavaScript', 'Responsive development', 'Git & GitHub'],
-  },
-  {
-    title: 'Funnels & CRM',
-    description: 'Customer journeys connected to usable sales systems.',
-    items: ['GoHighLevel', 'Landing pages', 'Forms & pipelines', 'CRM setup'],
-  },
-  {
-    title: 'Automation',
-    description: 'Workflows that reduce repetitive operational tasks.',
-    items: ['ManyChat', 'Webhooks', 'Google Sheets', 'API integrations', 'Workflow automation'],
-  },
-  {
-    title: 'Analytics',
-    description: 'Implementation that makes performance visible.',
-    items: ['Google Analytics 4', 'Google Tag Manager', 'Meta Pixel', 'Conversion tracking'],
-  },
-  {
-    title: 'Design & build tools',
-    description: 'Tools used to plan, build, and communicate digital work.',
-    items: ['Figma', 'VS Code', 'Notion', 'Lovable'],
-  },
+  { title: 'Web development', items: ['HTML', 'CSS', 'JavaScript', 'React', 'Node.js', 'MongoDB', 'Git', 'GitHub'], pending: [] as string[] },
+  { title: 'Funnels & CRM', items: ['GoHighLevel', 'Landing pages', 'Forms', 'CRM workflows'], pending: ['Pipelines'] },
+  { title: 'Automation & integration', items: ['Business automation', 'Integrations'], pending: ['ManyChat', 'Webhooks', 'Google Sheets', 'API integrations'] },
+  { title: 'Analytics', items: ['Analytics implementation'], pending: ['Google Analytics 4', 'Google Tag Manager', 'Meta Pixel', 'Conversion tracking'] },
+  { title: 'Design / development tools', items: ['Figma', 'Postman'], pending: ['VS Code', 'Notion', 'Lovable'] },
+  { title: 'Other web platforms', items: ['Shopify', 'WordPress', 'Webflow', 'Framer'], pending: [] as string[] },
 ];
-
-export const credentials: Array<{
-  name: string;
-  provider: string;
-  year: string;
-  url: string;
-  type: 'Certification' | 'Education' | 'Course' | 'Training';
-}> = [];
-
-export const about = [
-  'I work between development, digital systems, and client implementation.',
-  'Most of my work involves taking a business requirement and turning it into something usable — whether that is a website, funnel, CRM workflow, chatbot, analytics setup, or automation.',
-  'I particularly enjoy projects where design and technical implementation need to work together.',
+export type Credential = {
+  name: string; provider: string; year: string; credentialURL: string;
+  certificateImage: string; type: 'Certification' | 'Training' | 'Education';
+};
+export const credentials: Credential[] = [
+  { name: 'Full-Stack Web Development (MERN)', provider: 'Zuitt Coding Bootcamp', year: 'June 2024', credentialURL: '', certificateImage: '', type: 'Certification' },
+  { name: 'Network Administration Training', provider: 'The Poor IT Guy', year: 'March 2023', credentialURL: '', certificateImage: '', type: 'Training' },
+  { name: 'Bachelor of Science in Computer Science', provider: 'Pamantasan ng Lungsod ng Muntinlupa', year: 'August 2022', credentialURL: '', certificateImage: '', type: 'Education' },
 ];
-
-export const enabledProjects = projects.filter((project) => project.enabled);
-export const caseStudyProjects = enabledProjects.filter(
-  (project) => project.visibility !== 'private',
-);
-
+export const enabledProjects = projects.filter((project) => project.enabled && project.visibility !== 'private');
+export const caseStudyProjects = enabledProjects;
 export function getProject(slug: string) {
   return caseStudyProjects.find((project) => project.slug === slug);
 }

@@ -1,19 +1,8 @@
-# Professional portfolio
+# Zyron Jade Fausto — Portfolio
 
-A multi-page personal portfolio built with Next.js, React, TypeScript, Motion, and Lucide icons. The project uses the App Router and exports to static HTML, so the finished site can be hosted on any static provider.
+Next.js App Router, React, TypeScript, Geist, Motion, and Lucide. No new dependencies were added for the redesign. The site exports to static HTML.
 
-## Routes
-
-- `/` — concise overview and featured work
-- `/work/` — complete project collection
-- `/work/[slug]/` — generated case study pages
-- `/experience/`
-- `/skills/`
-- `/credentials/`
-- `/about/`
-- `/contact/`
-
-## Develop and verify
+## Develop
 
 ```sh
 npm install
@@ -22,33 +11,33 @@ npm run check
 npm run build
 ```
 
-The development site opens at `http://localhost:3000`. The production export is written to `out/`.
+The static output is in `out/`. The existing Sites identity is in `.openai/hosting.json`.
 
-## Update portfolio content
+## Structure
 
-All editable identity, project, experience, skill, credential, and About content is in `data/portfolio.ts`.
+The homepage contains Introduction, Projects, Tech Stack, Experience, and Certifications. The four sidebar links scroll to sections and track the reading position. The avatar returns to the introduction. Existing `/work/`, `/skills/`, `/experience/`, `/credentials/`, `/about/`, and `/contact/` routes remain available with shared content. Project details use `/work/[slug]/`.
 
-1. Replace `YOUR NAME`, initials, title, contact details, and social links.
-2. Confirm the provisional introduction, skills, and About copy.
-3. Replace project placeholders with approved descriptions and screenshots.
-4. Replace the experience placeholders with verified work history.
-5. Add real credentials, or keep the honest empty state.
-6. Set `draft: false` once the content has been reviewed.
+- `data/portfolio.ts`: all profile, project, experience, tech-stack, and credential data.
+- `components/portfolio-sections.tsx`: content shared by home sections and standalone routes.
+- `components/site-shell.tsx`: sidebar, mobile navigation, section tracking, and footer.
+- `components/contact-controls.tsx`: clipboard feedback and theme control.
+- `lib/theme.ts`: OS preference and local preference persistence.
+- `app/globals.css`: solid light/dark tokens and controlled responsive typography.
 
-Do not store confidential details in the data file. A project with `visibility: 'private'` never receives a public case-study route. A `limited` project can have a case study, but only approved content should be added.
+## Content still to confirm
 
-## Project images and links
+The supplied avatar is at `public/profile/dazayy.jpeg`; replace it or set `profile.photo` to an empty string for the neutral initials fallback.
 
-Place approved images in `public/projects/` and set each project's `image` to a root-relative path such as `/projects/project-name.webp`. Add clear `alt` text. Missing images use a controlled placeholder with a reserved aspect ratio.
+The previous résumé is used as a source only and is not part of the public files. Three experience entries and three credentials were transcribed without metrics. Zeta Dev X's current status is intentionally unknown; confirm `current` and any end date, and add newer work history.
 
-External links are rendered only when they are valid HTTP(S) URLs. Email links appear only when the email address passes basic validation. A résumé link should point to a real file under `public/` before it is added to the interface.
+The six proposed project records are explicitly provisional. Supply approved descriptions, roles, dates, responsibilities, screenshots, and links before setting `placeholder: false`. Missing actions are hidden. Private projects are excluded from cards and public routes. Screenshot records use `{ src, alt }` and assets belong under `public/projects/`.
 
-## Design system
+Technology entries supported by the résumé or the supplied introduction are shown normally; additional tools needing confirmation are kept in each group's `pending` list. Move these only after verification.
 
-The interface uses Geist Sans and Geist Mono with a dark three-color foundation: Alabaster Grey (`#d8dbe2`), Charcoal Blue (`#373f51`), and Carbon Black (`#1b1b1e`). Translucent glass surfaces keep text clear while allowing the static layered gradient background to remain visible.
+Certification and education dates were verified visually in the résumé: June 2024, March 2023, and August 2022. Credential links and certificate images are not yet supplied.
 
-The background is rendered entirely with CSS and does not animate. Page transitions, mobile navigation, content reveals, and project-card feedback honor reduced-motion preferences.
+Keep `profile.resume` empty until an updated, approved PDF is placed in `public/`. The download action stays hidden while empty.
 
-The navigation is persistent on desktop and becomes a compact, keyboard-accessible mobile menu below 900px. Icons come from Lucide and are imported individually so unused icons stay out of the bundle.
+## Appearance and interactions
 
-To add a profile picture, place the image under `public/` and set `profile.photo` in `data/portfolio.ts` to its root-relative path, such as `/profile.webp`. The initials remain as a fallback while that field is empty.
+No gradients, blur, glass effects, or continuous animation. Light mode uses a neutral near-white; dark mode uses Carbon Black. The browser's system theme is used initially, and manual choices persist when local storage is available. Clipboard failure leaves the full email visible with manual-copy guidance. Reduced-motion preferences disable smooth scrolling and transitions.

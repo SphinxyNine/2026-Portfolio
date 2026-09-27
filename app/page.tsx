@@ -1,97 +1,37 @@
-import { ArrowRight, BarChart3, Blocks, GitBranch, MonitorSmartphone, Workflow } from 'lucide-react';
-import Link from 'next/link';
-import { CtaPanel } from '@/components/cta-panel';
-import { DraftBadge } from '@/components/draft-badge';
-import { ProjectCard } from '@/components/project-card';
-import { Reveal } from '@/components/reveal';
-import { enabledProjects, profile } from '@/data/portfolio';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ProjectsContent, TechStackContent, ExperienceContent, CertificationsContent } from '@/components/portfolio-sections';
+import { profile } from '@/data/portfolio';
 
-const capabilityIcons = [MonitorSmartphone, GitBranch, Workflow, BarChart3];
-
-const capabilities = [
-  ['Websites', 'Responsive, clear, maintainable'],
-  ['Funnels & CRM', 'Connected journeys and pipelines'],
-  ['Automation', 'Useful workflows and integrations'],
-  ['Analytics', 'Tracking that supports decisions'],
+const sections = [
+  { id: 'projects', title: 'Projects', component: ProjectsContent },
+  { id: 'tech-stack', title: 'Tech Stack', component: TechStackContent },
+  { id: 'experience', title: 'Experience', component: ExperienceContent },
+  { id: 'certifications', title: 'Certifications', component: CertificationsContent },
 ];
-
-export default function OverviewPage() {
+export default function HomePage() {
   return (
     <div className="page home-page">
-      <section className="hero">
-        <div className="hero-copy">
-          <div className="hero-kicker">
-            <span className="eyebrow">Portfolio / {profile.location}</span>
-            {profile.draft && <DraftBadge />}
-          </div>
-          <h1>
-            I connect business needs with <span>working digital systems.</span>
-          </h1>
-          <p>{profile.introduction}</p>
-          <div className="hero-actions">
-            <Link className="button button-primary" href="/work/">
-              Explore selected work <ArrowRight size={17} />
-            </Link>
-            <Link className="button button-quiet" href="/about/">
-              More about me
-            </Link>
-          </div>
+      <section id="introduction" className="hero" aria-labelledby="intro-heading" tabIndex={-1}>
+        <p className="eyebrow">Personal portfolio <span aria-hidden="true">/</span> {profile.location}</p>
+        <h1 id="intro-heading">{profile.name}</h1>
+        <p className="hero-title">{profile.title}</p>
+        <ul className="expertise" aria-label="Areas of work">{profile.expertise.map((item) => <li key={item}>{item}</li>)}</ul>
+        <p className="hero-description">{profile.introduction}</p>
+        <div className="hero-actions">
+          <a className="button button-primary" href="#projects">View Projects <ArrowDown size={16} /></a>
+          <a className="button button-quiet" href={profile.socials.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={16} /></a>
         </div>
-
-        <Reveal className="system-panel" delay={0.12}>
-          <div className="system-panel-header">
-            <div>
-              <span className="status-light" />
-              <span>What I connect</span>
-            </div>
-            <Blocks size={19} />
-          </div>
-          <div className="system-panel-flow">
-            {capabilities.map(([title, description], index) => {
-              const Icon = capabilityIcons[index];
-              return (
-                <div className="system-node" key={title}>
-                  <span><Icon size={17} /></span>
-                  <div>
-                    <strong>{title}</strong>
-                    <small>{description}</small>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="system-panel-footer">
-            <span>Requirement</span><span>→</span><span>Implementation</span><span>→</span><span>Outcome</span>
-          </div>
-        </Reveal>
+        {profile.resume && <a className="inline-link resume-link" href={profile.resume} download>Download Résumé <ArrowDown size={15} /></a>}
       </section>
-
-      <section className="home-section">
-        <div className="section-heading-row">
-          <div>
-            <p className="eyebrow">02 / Selected work</p>
-            <h2>Projects built around real requirements.</h2>
-          </div>
-          <Link className="inline-link" href="/work/">View all work <ArrowRight size={15} /></Link>
-        </div>
-        <div className="featured-projects">
-          {enabledProjects.slice(0, 2).map((project, index) => (
-            <ProjectCard project={project} index={index} key={project.slug} />
-          ))}
-        </div>
-      </section>
-
-      <Reveal className="home-section focus-section">
-        <div>
-          <p className="eyebrow">Current focus</p>
-          <h2>Technical implementation with the business context still attached.</h2>
-        </div>
-        <p>
-          The strongest work happens when the site, funnel, CRM, automation, and tracking setup are treated as one connected system.
-        </p>
-      </Reveal>
-
-      <CtaPanel />
+      {sections.map(({ id, title, component: Content }, index) => (
+        <section className="portfolio-section" id={id} aria-labelledby={`${id}-heading`} tabIndex={-1} key={id}>
+          <header className="section-heading">
+            <span className="section-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <h2 id={`${id}-heading`}>{title}</h2>
+          </header>
+          <Content />
+        </section>
+      ))}
     </div>
   );
 }
