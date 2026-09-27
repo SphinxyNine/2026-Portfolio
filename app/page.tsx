@@ -41,7 +41,7 @@ export default function HomePage() {
             <Image src={profile.photo} alt={profile.photoAlt} fill sizes="(max-width: 700px) 80vw, 380px" priority />
           </figure>
           <div className="hero-copy">
-            <h1 className="hero-name" id="intro-heading">{profile.name}</h1>
+            <h1 className="hero-name" id="intro-heading">{profile.overviewName}</h1>
             <p className="hero-title">{profile.title}</p>
             <p className="hero-description">{profile.introduction}</p>
             <ul className="expertise" aria-label="Areas of work">{profile.expertise.map((item) => <li key={item}>{item}</li>)}</ul>

@@ -8,7 +8,7 @@ export type Project = {
 };
 
 export const profile = {
-  name: 'Zy Fausto', shortName: 'Zy Fausto',
+  name: 'Zy Fausto', shortName: 'Zy Fausto', overviewName: 'Zy Jade Fausto',
   title: 'Web Developer & Automation Specialist',
   expertise: ['Web Development', 'Funnels', 'CRM', 'Automation'],
   location: 'Philippines', photo: '/profile/dazayy.jpeg',
