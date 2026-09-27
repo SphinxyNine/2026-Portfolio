@@ -36,6 +36,7 @@ export function CopyEmail() {
   return (
     <div className="email-area">
       <p className="eyebrow">Contact</p>
+      <p className="contact-invite">Have a project, collaboration, or idea to discuss? Send me a note.</p>
       <div className="email-row">
         <a className="email-link" ref={address} href={`mailto:${profile.email}`}>
           <span className="email-icon" aria-hidden="true"><Mail size={15} strokeWidth={1.7} /></span>

@@ -116,6 +116,7 @@
   html[data-theme-transition="active"]::view-transition { pointer-events: none; }
   .email-area { border-top: 1px solid var(--line); padding-top: 1.1rem; }
   .email-area > .eyebrow { font-size: 0.62rem; }
+  .contact-invite { max-width: 25ch; margin-top: 0.55rem; color: var(--muted); font-size: 0.68rem; line-height: 1.5; }
   .email-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.2rem; margin-top: 0.3rem; }
   .email-row > a { font-size: 0.72rem; overflow-wrap: anywhere; line-height: 1.45; }
   .email-row > a:hover { text-decoration: underline; }
