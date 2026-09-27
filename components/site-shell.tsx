@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight, BriefcaseBusiness, CodeXml, FileBadge, Layers3, Menu, Wrench, X } from 'lucide-react';
+import { ArrowUpRight, BookOpenText, BriefcaseBusiness, CodeXml, FileBadge, Keyboard, Layers3, Menu, MessageSquareText, PackageOpen, ShoppingBag, Wrench, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -13,6 +13,17 @@ const navigation = [
   { id: 'tech-stack', label: 'Tech Stack', icon: Wrench, route: '/skills' },
   { id: 'experience', label: 'Experience', icon: BriefcaseBusiness, route: '/experience' },
   { id: 'certifications', label: 'Certifications', icon: FileBadge, route: '/credentials' },
+];
+
+const explore = [
+  { label: 'Resources', icon: PackageOpen },
+  { label: 'Blog', icon: BookOpenText },
+  { label: 'Shop', icon: ShoppingBag },
+];
+
+const lab = [
+  { label: 'Ask anything', icon: MessageSquareText },
+  { label: 'Typing test', icon: Keyboard },
 ];
 
 function SocialLinks() {
@@ -39,7 +50,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (pathname !== '/') return;
-    const sections = Array.from(document.querySelectorAll<HTMLElement>('.home-page > section[id]'));
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('.home-page > section[data-nav-section]'));
     let frame = 0;
     const update = () => {
       const marker = window.innerWidth <= 900 ? 130 : 150;
@@ -109,7 +120,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             <Link key={id} href={`/#${id}`} onClick={(event) => navigate(event, id)}
               className={active ? 'nav-link is-active' : 'nav-link'}
               aria-current={active ? 'location' : undefined}>
-              <Icon size={18} strokeWidth={1.6} aria-hidden="true" /><span>{label}</span>
+              <span className="motion-icon"><Icon size={18} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span>
             </Link>
           );
         })}
@@ -127,7 +138,19 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <p className="profile-title">{profile.title}</p>
           <p className="profile-location">{profile.location}</p>
         </div>
+        <div className="sidebar-group" aria-label="Planned sections">
+          <p className="sidebar-group-label">Explore</p>
+          {explore.map(({ label, icon: Icon }) => (
+            <div className="sidebar-planned-row" key={label}><span className="motion-icon"><Icon size={16} aria-hidden="true" /></span><span>{label}</span><small>Soon</small></div>
+          ))}
+        </div>
         {nav()}
+        <div className="sidebar-group sidebar-lab" aria-label="Planned interactive tools">
+          <p className="sidebar-group-label">Lab</p>
+          {lab.map(({ label, icon: Icon }) => (
+            <div className="sidebar-planned-row" key={label}><span className="motion-icon"><Icon size={16} aria-hidden="true" /></span><span>{label}</span><small>Planned</small></div>
+          ))}
+        </div>
         <div className="sidebar-footer">
           <SocialLinks />
           <ThemeToggle />

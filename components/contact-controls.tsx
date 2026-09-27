@@ -1,19 +1,12 @@
 'use client';
 
-import { Check, Copy, Moon, Sun } from 'lucide-react';
+import { Check, Copy } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { profile } from '@/data/portfolio';
-import { useTheme } from '@/lib/theme';
+import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 
 export function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
-  const dark = theme === 'dark';
-  return (
-    <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={`Switch to ${dark ? 'light' : 'dark'} mode`}>
-      {dark ? <Sun size={17} /> : <Moon size={17} />}
-      <span>{dark ? 'Light mode' : 'Dark mode'}</span>
-    </button>
-  );
+  return <AnimatedThemeToggler />;
 }
 export function CopyEmail() {
   const [status, setStatus] = useState('');

@@ -15,13 +15,25 @@ export const profile = {
   photoAlt: 'Illustrated character avatar chosen by Zyron Jade Fausto',
   email: 'jade.fausto17@gmail.com',
   resume: '', // Add only the updated, approved résumé.
-  introduction: "I'm a web developer and automation specialist based in the Philippines. I build websites, funnels, CRM workflows, and business automations for client and internal projects. My work includes development, GoHighLevel, integrations, analytics, and technical implementation.",
+  introduction: "I build responsive websites, funnels, CRM workflows, and business automations. My work combines development, GoHighLevel, integrations, analytics, and practical technical support.",
   socials: { linkedin: 'https://linkedin.com/in/zyron-fausto/', github: 'https://github.com/SphinxyNine' },
   seo: {
     description: 'Portfolio of Zyron Jade Fausto, a web developer and automation specialist working with websites, funnels, CRM systems, integrations, and digital automation.',
     canonical: 'https://professional-portfolio.golivedigital-jz.chatgpt.site',
   },
 };
+
+export const overviewHighlights = [
+  { value: 'Web', label: 'Responsive websites' },
+  { value: 'Systems', label: 'Funnels & CRM' },
+  { value: 'Automation', label: 'Workflows & integrations' },
+];
+
+export const plannedPosts = [
+  { title: 'Building a portfolio around verified work', topic: 'Process' },
+  { title: 'What I automate with GoHighLevel', topic: 'Automation' },
+  { title: 'From website requirements to implementation', topic: 'Development' },
+];
 
 // Candidates from the brief. Roles, dates, results, and case studies need approval.
 function projectDraft(slug: string, client: string, title: string, category: string): Project {

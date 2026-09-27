@@ -15,7 +15,7 @@ The static output is in `out/`. The existing Sites identity is in `.openai/hosti
 
 ## Structure
 
-The homepage contains Introduction, Projects, Tech Stack, Experience, and Certifications. The four sidebar links scroll to sections and track the reading position. The avatar returns to the introduction. Existing `/work/`, `/skills/`, `/experience/`, `/credentials/`, `/about/`, and `/contact/` routes remain available with shared content. Project details use `/work/[slug]/`.
+The homepage contains a split portrait introduction, focus strip, planned build-log topics, Projects, Tech Stack, Experience, and Certifications. The four working sidebar links scroll to sections and track the reading position. Resources, Blog, Shop, Ask anything, and Typing test are visibly marked as planned instead of linking to empty pages. The avatar returns to the introduction. Existing `/work/`, `/skills/`, `/experience/`, `/credentials/`, `/about/`, and `/contact/` routes remain available with shared content. Project details use `/work/[slug]/`.
 
 - `data/portfolio.ts`: all profile, project, experience, tech-stack, and credential data.
 - `components/portfolio-sections.tsx`: content shared by home sections and standalone routes.
@@ -23,6 +23,7 @@ The homepage contains Introduction, Projects, Tech Stack, Experience, and Certif
 - `components/contact-controls.tsx`: clipboard feedback and theme control.
 - `lib/theme.ts`: OS preference and local preference persistence.
 - `app/globals.css`: solid light/dark tokens and controlled responsive typography.
+- `docs/roadmap.md`: approved backlog, content gates, and privacy requirements for future pages and tools.
 
 ## Content still to confirm
 
@@ -40,4 +41,6 @@ Keep `profile.resume` empty until an updated, approved PDF is placed in `public/
 
 ## Appearance and interactions
 
-No gradients, blur, glass effects, or continuous animation. Light mode uses a neutral near-white; dark mode uses Carbon Black. The browser's system theme is used initially, and manual choices persist when local storage is available. Clipboard failure leaves the full email visible with manual-copy guidance. Reduced-motion preferences disable smooth scrolling and transitions.
+No gradients, blur, glass effects, or continuous animation. Light mode uses a neutral near-white; dark mode uses Carbon Black. The browser's system theme is used initially, and manual choices persist when local storage is available. Clipboard failure leaves the full email visible with manual-copy guidance. Lucide icons use short hover and keyboard-focus transforms. Reduced-motion preferences disable smooth scrolling, transitions, and decorative movement.
+
+The theme button uses the supplied Magic UI View Transitions approach, adapted to the existing theme store without extra dependencies. It reveals the new theme in a 450ms circle from the button on desktop and mobile. The component in `components/ui/animated-theme-toggler.tsx` also accepts `variant`, `duration`, and `fromCenter`. Reduced motion and browsers without the API use an immediate switch. Rapid clicks are ignored until the active reveal completes, and interrupted transitions clean up their snapshots.

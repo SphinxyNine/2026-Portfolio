@@ -37,11 +37,13 @@ function subscribe(onChange: () => void) {
 }
 export function useTheme() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, () => 'light' as const);
-  function toggleTheme() {
-    const next = getSnapshot() === 'dark' ? 'light' : 'dark';
+  function setTheme(next: 'light' | 'dark') {
     document.documentElement.dataset.theme = next;
     try { localStorage.setItem(themeKey, next); } catch { /* Keep session theme if storage is unavailable. */ }
     window.dispatchEvent(new Event(themeEvent));
   }
-  return { theme, toggleTheme };
+  function toggleTheme() {
+    setTheme(getSnapshot() === 'dark' ? 'light' : 'dark');
+  }
+  return { theme, setTheme, toggleTheme };
 }
