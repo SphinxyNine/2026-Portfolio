@@ -32,25 +32,25 @@
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #1b1b1e;
-    --surface: #232326;
-    --surface-raised: #2d2f35;
-    --text: #d8dbe2;
-    --text-soft: #b8bec7;
-    --muted: #a0a6b0;
-    --line: #36383e;
-    --line-bright: #535761;
-    --accent: #d8dbe2;
-    --on-accent: #1b1b1e;
-    --focus: #b4c9ed;
+    --bg: #0e1b18;
+    --surface: #13241f;
+    --surface-raised: #1a312a;
+    --text: #dce7e2;
+    --text-soft: #b8cbc3;
+    --muted: #91a79e;
+    --line: #294139;
+    --line-bright: #46685c;
+    --accent: #a7d3c3;
+    --on-accent: #0e1b18;
+    --focus: #bce5d6;
   }
   /* CSS-only initial theme also works if scripting is unavailable. */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme]) {
-      color-scheme: dark; --bg: #1b1b1e; --surface: #232326;
-      --surface-raised: #2d2f35; --text: #d8dbe2; --text-soft: #b8bec7;
-      --muted: #a0a6b0; --line: #36383e; --line-bright: #535761;
-      --accent: #d8dbe2; --on-accent: #1b1b1e; --focus: #b4c9ed;
+      color-scheme: dark; --bg: #0e1b18; --surface: #13241f;
+      --surface-raised: #1a312a; --text: #dce7e2; --text-soft: #b8cbc3;
+      --muted: #91a79e; --line: #294139; --line-bright: #46685c;
+      --accent: #a7d3c3; --on-accent: #0e1b18; --focus: #bce5d6;
     }
   }
   body {
