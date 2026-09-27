@@ -135,7 +135,10 @@
   .mobile-header, .mobile-menu { display: none; }
   .site-main { margin-left: var(--sidebar-width); min-height: 100vh; }
   .page { width: min(calc(100% - 6rem), var(--content)); margin: 0 auto; padding: 3.5rem 0; }
-  .hero { padding: clamp(2.5rem, 5vw, 5rem) 0 clamp(3rem, 5vw, 4.5rem); }
+  .home-page { overflow: clip; }
+  .hero { position: relative; isolation: isolate; padding: clamp(2.5rem, 5vw, 5rem) 0 clamp(3rem, 5vw, 4.5rem); }
+  .hero::before { content: ""; position: absolute; z-index: -1; top: -1.5rem; right: -4rem; width: min(52vw, 520px); height: 360px; pointer-events: none; opacity: .72; background-image: radial-gradient(circle, color-mix(in srgb, var(--line-bright) 42%, transparent) 1px, transparent 1.35px); background-size: 18px 18px; background-position: top right; mask-image: radial-gradient(ellipse at top right, #000 0%, rgba(0, 0, 0, .78) 38%, transparent 74%); -webkit-mask-image: radial-gradient(ellipse at top right, #000 0%, rgba(0, 0, 0, .78) 38%, transparent 74%); }
+  .hero-grid, .hero .overview-highlights { position: relative; z-index: 1; }
   .hero-grid { display: grid; grid-template-columns: minmax(260px, 0.86fr) minmax(0, 1.14fr); align-items: center; gap: clamp(2.5rem, 6vw, 5.5rem); }
   .hero-portrait { position: relative; width: min(100%, 390px); aspect-ratio: 1 / 1; overflow: hidden; background: var(--surface); border-bottom: 1px solid var(--line-bright); }
   .hero-portrait::after { content: ""; position: absolute; inset: 0; pointer-events: none; border: 1px solid color-mix(in srgb, var(--line-bright) 55%, transparent); }
@@ -322,6 +325,7 @@
   @media (max-width: 700px) {
     .page, .site-footer { width: calc(100% - 2.5rem); }
     .hero { padding-top: 1rem; padding-bottom: 3rem; }
+    .hero::before { top: -1.5rem; right: -2rem; width: 78vw; height: 260px; opacity: .56; background-size: 16px 16px; }
     .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
     .hero-portrait { width: 100%; max-width: 440px; justify-self: center; }
     .hero h1 { margin-top: 1.25rem; }
