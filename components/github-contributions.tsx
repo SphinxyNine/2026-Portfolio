@@ -36,7 +36,7 @@ export function GitHubContributions() {
   return (
     <section className="home-section github-section" aria-labelledby="github-heading">
       <header className="section-heading home-section-heading">
-        <span className="section-index" aria-hidden="true">05</span>
+        <span className="section-index" aria-hidden="true">06</span>
         <h2 id="github-heading">GitHub activity</h2>
         <a className="inline-link section-link" href={`https://github.com/${snapshot.username}`} target="_blank" rel="noopener noreferrer">
           @{snapshot.username} <ArrowUpRight size={14} aria-hidden="true" />

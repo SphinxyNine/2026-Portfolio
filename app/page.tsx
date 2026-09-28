@@ -7,6 +7,7 @@ import {
   GraduationCap,
   MonitorUp,
   Network,
+  SearchCheck,
   Workflow,
 } from 'lucide-react';
 import Image from 'next/image';
@@ -38,7 +39,7 @@ export default function HomePage() {
       <section id="introduction" className="hero" aria-labelledby="intro-heading" tabIndex={-1}>
         <div className="hero-grid">
           <figure className="hero-portrait">
-            <Image src={profile.photo} alt={profile.photoAlt} fill sizes="(max-width: 700px) 80vw, 380px" priority />
+            <Image src={profile.photo} alt={profile.photoAlt} fill sizes="(max-width: 700px) 80vw, 380px" priority fetchPriority="high" />
           </figure>
           <div className="hero-copy">
             <h1 className="hero-name" id="intro-heading">{profile.overviewName}</h1>
@@ -144,6 +145,30 @@ export default function HomePage() {
               <h3>{post.title}</h3><p>{post.topic}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="home-section" aria-labelledby="lab-preview-heading">
+        <header className="section-heading home-section-heading">
+          <span className="section-index" aria-hidden="true">05</span>
+          <h2 id="lab-preview-heading">Interactive lab</h2>
+          <span className="section-link">Try something</span>
+        </header>
+        <div className="home-lab-grid">
+          <Link className="home-lab-card animated-control" href="/lab/workflow">
+            <span className="home-lab-icon"><Workflow size={21} strokeWidth={1.5} aria-hidden="true" /></span>
+            <p className="eyebrow">Automation playground</p>
+            <h3>Build a Workflow</h3>
+            <p>Choose a trigger, connect CRM actions, and run the automation.</p>
+            <span className="inline-link">Open lab <span className="motion-icon"><ArrowRight size={14} aria-hidden="true" /></span></span>
+          </Link>
+          <Link className="home-lab-card animated-control" href="/lab/funnel">
+            <span className="home-lab-icon"><SearchCheck size={21} strokeWidth={1.5} aria-hidden="true" /></span>
+            <p className="eyebrow">UX challenge</p>
+            <h3>Fix the Funnel</h3>
+            <p>Find four weak points in a sample landing page and improve them.</p>
+            <span className="inline-link">Start challenge <span className="motion-icon"><ArrowRight size={14} aria-hidden="true" /></span></span>
+          </Link>
         </div>
       </section>
 

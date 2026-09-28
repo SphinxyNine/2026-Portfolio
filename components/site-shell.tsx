@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Keyboard, Layers3, Menu, MessageSquareText, PackageOpen, ShoppingBag, Wrench, X } from 'lucide-react';
+import { ArrowRight, BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Layers3, Menu, PackageOpen, SearchCheck, ShoppingBag, Workflow, Wrench, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
@@ -22,8 +22,8 @@ const explore = [
 ];
 
 const lab = [
-  { label: 'Ask anything', icon: MessageSquareText },
-  { label: 'Typing test', icon: Keyboard },
+  { label: 'Build a workflow', icon: Workflow, route: '/lab/workflow' },
+  { label: 'Fix the funnel', icon: SearchCheck, route: '/lab/funnel' },
 ];
 
 function SocialLinks() {
@@ -70,8 +70,44 @@ export function SiteShell({ children }: { children: ReactNode }) {
           return (
             <Link key={route} href={route} onClick={() => setMenuOpen(false)}
               className={active ? 'nav-link is-active' : 'nav-link'}
-              aria-current={active ? 'location' : undefined}>
+              aria-current={active ? 'page' : undefined}>
               <span className="motion-icon"><Icon size={17} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span>
+              {active && <ArrowRight className="nav-current-arrow" size={13} strokeWidth={1.7} aria-hidden="true" />}
+            </Link>
+          );
+        })}
+      </nav>
+    );
+  }
+
+  function exploreNav() {
+    return (
+      <nav className="sidebar-group" aria-label="Explore">
+        <p className="sidebar-group-label">Explore</p>
+        {explore.map(({ label, icon: Icon, route }) => {
+          const active = pathname.startsWith(route);
+          return (
+            <Link className={active ? 'nav-link is-active' : 'nav-link'} aria-current={active ? 'page' : undefined}
+              href={route} key={route} onClick={() => setMenuOpen(false)}>
+              <span className="motion-icon"><Icon size={15} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span>
+              {active && <ArrowRight className="nav-current-arrow" size={13} strokeWidth={1.7} aria-hidden="true" />}
+            </Link>
+          );
+        })}
+      </nav>
+    );
+  }
+
+  function labNav() {
+    return (
+      <nav className="sidebar-group sidebar-lab" aria-label="Interactive lab">
+        <p className="sidebar-group-label"><span>Lab</span><small>Interactive</small></p>
+        {lab.map(({ label, icon: Icon, route }) => {
+          const active = pathname.startsWith(route);
+          return (
+            <Link className={active ? 'nav-link is-active' : 'nav-link'} aria-current={active ? 'page' : undefined}
+              href={route} key={route} onClick={() => setMenuOpen(false)}>
+              <span className="motion-icon"><Icon size={15} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span>
               {active && <ArrowRight className="nav-current-arrow" size={13} strokeWidth={1.7} aria-hidden="true" />}
             </Link>
           );
@@ -84,27 +120,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
     <div className="site-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <aside className="desktop-sidebar" aria-label="Profile and navigation">
-        <Link className="sidebar-brand" href="/" aria-label="Go to overview"><ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}</Link>
-        <nav className="sidebar-group" aria-label="Explore">
-          <p className="sidebar-group-label">Explore</p>
-          {explore.map(({ label, icon: Icon, route }) => {
-            const active = pathname.startsWith(route);
-            return (
-              <Link className={active ? 'nav-link is-active' : 'nav-link'} aria-current={active ? 'page' : undefined}
-                href={route} key={route} onClick={() => setMenuOpen(false)}>
-                <span className="motion-icon"><Icon size={15} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span>
-                {active && <ArrowRight className="nav-current-arrow" size={13} strokeWidth={1.7} aria-hidden="true" />}
-              </Link>
-            );
-          })}
-        </nav>
+        <Link className="sidebar-brand" href="/" aria-label={`${profile.shortName} — go to overview`}><ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}</Link>
+        {exploreNav()}
         {nav()}
-        <div className="sidebar-group sidebar-lab" aria-label="Planned interactive tools">
-          <p className="sidebar-group-label"><span>Lab</span><small>In progress</small></p>
-          {lab.map(({ label, icon: Icon }) => (
-            <div className="sidebar-planned-row" key={label}><span className="motion-icon"><Icon size={15} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span></div>
-          ))}
-        </div>
+        {labNav()}
         <div className="sidebar-footer">
           <SocialLinks />
           <ThemeToggle />
@@ -112,7 +131,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         </div>
       </aside>
       <header className="mobile-header">
-        <Link className="mobile-brand" href="/" onClick={() => setMenuOpen(false)} aria-label="Go to overview">
+        <Link className="mobile-brand" href="/" onClick={() => setMenuOpen(false)} aria-label={`${profile.shortName} — go to overview`}>
           <ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}
         </Link>
         <button ref={menuButton} className="icon-button menu-button" type="button" onClick={() => setMenuOpen(!menuOpen)}
@@ -122,7 +141,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </header>
       {menuOpen && (
         <div id="mobile-menu" ref={mobileMenu} className="mobile-menu">
+          {exploreNav()}
           {nav()}
+          {labNav()}
           <div className="mobile-menu-footer"><SocialLinks /><ThemeToggle /><CopyEmail /></div>
         </div>
       )}
