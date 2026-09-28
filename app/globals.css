@@ -460,6 +460,17 @@
   .page-intro { max-width: 64ch; padding: 1rem 0 3rem; }
   .page-intro h1, .case-study h1, .not-found h1 { font-size: clamp(1.8rem, 1.35rem + 1.5vw, 2.7rem); margin-top: 1rem; }
   .page-intro-copy { margin-top: 1rem; }
+  .resources-page .page-intro { max-width: 70ch; }
+  .resource-directory { display: grid; gap: 4rem; }
+  .resource-group { border-top: 1px solid var(--line); padding-top: 1.15rem; }
+  .resource-group h2 { color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 3rem; margin-top: 1.4rem; }
+  .resource-grid a { display: grid; gap: 0.15rem; min-height: 88px; align-content: start; padding: 0.65rem 0; }
+  .resource-grid a:hover .resource-name, .resource-grid a:focus-visible .resource-name { color: var(--brand-jade); }
+  .resource-grid a:hover .resource-name svg, .resource-grid a:focus-visible .resource-name svg { transform: translate(2px, -2px); }
+  .resource-name { display: inline-flex; width: fit-content; align-items: center; gap: 0.35rem; color: var(--text); font-size: 0.94rem; font-weight: 600; line-height: 1.45; transition: color 160ms ease; }
+  .resource-name svg { color: var(--muted); transition: transform 180ms cubic-bezier(.2,.8,.2,1); }
+  .resource-description { max-width: 48ch; color: var(--muted); font-size: 0.8rem; line-height: 1.55; }
   .case-study .back-link { margin-bottom: 2rem; }
   .case-study-header > p, .case-study-header > div > p { margin-top: 1rem; }
   .case-study-facts { margin: 2rem 0; }
@@ -554,6 +565,10 @@
     .credential-row { grid-template-columns: auto minmax(0, 1fr); gap: 0.85rem; }
     .credential-row .credential-date { grid-column: 2; margin-top: -0.4rem; }
     .site-footer { align-items: flex-start; flex-direction: column; }
+    .resource-directory { gap: 3rem; }
+    .resource-grid { grid-template-columns: 1fr; gap: 0; }
+    .resource-grid a { min-height: 0; padding: 0.85rem 0; }
+    .resource-grid li + li { border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent); }
     .lab-action-grid { grid-template-columns: 1fr; }
     .workflow-canvas { min-height: 300px; padding: 0.8rem; }
     .mock-landing-page { grid-template-columns: 1fr; }
