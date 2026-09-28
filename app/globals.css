@@ -358,7 +358,7 @@
   .view-collection[data-view="list"] .shop-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 1rem; min-height: 0; align-items: start; padding: 1.1rem 0; border-width: 0 0 1px; border-radius: 0; background: transparent; }
   .view-collection[data-view="list"] .shop-item > svg { margin: 0.15rem 0 0; }
   .view-collection[data-view="list"] .shop-item > span { margin: 0; padding: 0; white-space: nowrap; }
-  .home-lab-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .home-lab-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
   .home-lab-card { display: flex; min-height: 250px; flex-direction: column; align-items: flex-start; padding: 1.4rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
   .home-lab-card:hover { border-color: var(--line-bright); background: color-mix(in srgb, var(--surface) 88%, var(--surface-raised)); }
   .home-lab-icon { display: grid; width: 42px; height: 42px; place-items: center; margin-bottom: 1.5rem; border: 1px solid var(--line); border-radius: 999px; color: var(--brand-jade); }
@@ -368,6 +368,35 @@
 
   .lab-page { --lab-panel-padding: clamp(1rem, 2.5vw, 1.5rem); }
   .lab-page .page-intro { padding-bottom: 2.2rem; }
+  .piano-lab { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .piano-toolbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; padding: var(--lab-panel-padding); border-bottom: 1px solid var(--line); }
+  .piano-toolbar h2 { margin-top: 0.3rem; font-size: 1.2rem; }
+  .piano-toolbar h2 + p { margin-top: 0.25rem; color: var(--muted); font-size: 0.76rem; }
+  .piano-controls { display: flex; flex: 0 0 auto; align-items: center; gap: 0.65rem; }
+  .octave-control { display: grid; grid-template-columns: 32px auto 32px; align-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+  .octave-control button { display: grid; width: 32px; height: 34px; place-items: center; border: 0; background: transparent; color: var(--muted); }
+  .octave-control button:hover:not(:disabled) { background: var(--surface-raised); color: var(--text); }
+  .octave-control button:disabled { cursor: not-allowed; opacity: .35; }
+  .octave-control span { min-width: 74px; color: var(--text); font-family: var(--font-geist-mono), monospace; font-size: 0.66rem; text-align: center; }
+  .piano-volume { display: flex; min-height: 36px; align-items: center; gap: 0.5rem; padding: 0 0.65rem; border: 1px solid var(--line); border-radius: var(--radius); color: var(--muted); background: var(--bg); }
+  .piano-volume input { width: 78px; accent-color: var(--brand-jade); }
+  .piano-stage { padding: clamp(1rem, 4vw, 2.2rem); background-color: var(--bg); background-image: radial-gradient(circle, color-mix(in srgb, var(--line-bright) 52%, transparent) 1px, transparent 1.2px); background-size: 18px 18px; }
+  .piano-keyboard { position: relative; width: min(100%, 900px); height: clamp(220px, 31vw, 310px); margin: 0 auto; touch-action: none; user-select: none; }
+  .piano-white-keys { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); width: 100%; height: 100%; }
+  .piano-key { -webkit-user-select: none; user-select: none; }
+  .piano-key-white { position: relative; display: flex; min-width: 0; flex-direction: column; align-items: center; justify-content: flex-end; gap: 0.45rem; padding: 0.75rem 0.2rem; border: 1px solid #aeb4be; border-width: 1px 1px 1px 0; border-radius: 0 0 5px 5px; background: #f5f5f1; color: #1b1b1e; box-shadow: inset 0 -7px 0 #d8dbe2; }
+  .piano-key-white:first-child { border-left-width: 1px; }
+  .piano-key-white:hover { background: #ffffff; }
+  .piano-key-white.is-active { background: #c5e1d7; box-shadow: inset 0 -3px 0 #8bbcab; transform: translateY(3px); }
+  .piano-key-black { position: absolute; z-index: 2; top: 0; left: calc(var(--piano-key-position) * 12.5%); display: flex; width: 8.2%; height: 62%; flex-direction: column; align-items: center; justify-content: flex-end; gap: 0.4rem; padding: 0.65rem 0.15rem; transform: translateX(-50%); border: 1px solid #050606; border-radius: 0 0 5px 5px; background: #1b1b1e; color: #d8dbe2; box-shadow: inset 0 -6px 0 #050606, 0 4px 7px rgba(0, 0, 0, .28); }
+  .piano-key-black:hover { background: #29322f; }
+  .piano-key-black.is-active { background: #2f6b5b; box-shadow: inset 0 -2px 0 #163b32, 0 2px 4px rgba(0, 0, 0, .2); transform: translate(-50%, 3px); }
+  .piano-note-name { font-family: var(--font-geist-mono), monospace; font-size: clamp(0.54rem, 0.45rem + .25vw, 0.68rem); font-weight: 600; }
+  .piano-computer-key { display: grid; width: 20px; height: 20px; place-items: center; border: 1px solid currentColor; border-radius: 3px; font-family: var(--font-geist-mono), monospace; font-size: 0.56rem; opacity: .55; }
+  .piano-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem var(--lab-panel-padding); border-top: 1px solid var(--line); }
+  .piano-footer p { color: var(--muted); font-size: 0.68rem; }
+  .piano-footer p:first-child span { color: var(--text); font-family: var(--font-geist-mono), monospace; }
+  .piano-footer p:last-child { font-family: var(--font-geist-mono), monospace; }
   .lab-panel-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
   .lab-panel-heading h2 { margin-top: 0.35rem; font-size: 1.15rem; }
   .automation-lab { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(330px, .95fr); gap: 1rem; align-items: start; }
@@ -565,6 +594,12 @@
     .credential-row { grid-template-columns: auto minmax(0, 1fr); gap: 0.85rem; }
     .credential-row .credential-date { grid-column: 2; margin-top: -0.4rem; }
     .site-footer { align-items: flex-start; flex-direction: column; }
+    .piano-toolbar, .piano-footer { align-items: flex-start; flex-direction: column; }
+    .piano-controls { width: 100%; justify-content: space-between; }
+    .piano-stage { padding-inline: 0.65rem; }
+    .piano-keyboard { height: 230px; }
+    .piano-volume input { width: 62px; }
+    .piano-computer-key { width: 18px; height: 18px; }
     .resource-directory { gap: 3rem; }
     .resource-grid { grid-template-columns: 1fr; gap: 0; }
     .resource-grid a { min-height: 0; padding: 0.85rem 0; }

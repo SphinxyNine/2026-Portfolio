@@ -6,6 +6,7 @@ import {
   ChartNoAxesCombined,
   GraduationCap,
   MonitorUp,
+  Music2,
   Network,
   SearchCheck,
   Workflow,
@@ -155,6 +156,13 @@ export default function HomePage() {
           <span className="section-link">Try something</span>
         </header>
         <div className="home-lab-grid">
+          <Link className="home-lab-card animated-control" href="/lab/piano">
+            <span className="home-lab-icon"><Music2 size={21} strokeWidth={1.5} aria-hidden="true" /></span>
+            <p className="eyebrow">Musical playground</p>
+            <h3>Play Pocket Keys</h3>
+            <p>Tap a one-octave piano, shift its range, or play it with your keyboard.</p>
+            <span className="inline-link">Play piano <span className="motion-icon"><ArrowRight size={14} aria-hidden="true" /></span></span>
+          </Link>
           <Link className="home-lab-card animated-control" href="/lab/workflow">
             <span className="home-lab-icon"><Workflow size={21} strokeWidth={1.5} aria-hidden="true" /></span>
             <p className="eyebrow">Automation playground</p>
