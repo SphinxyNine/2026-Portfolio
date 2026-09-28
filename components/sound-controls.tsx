@@ -9,6 +9,7 @@ type SoundMoment = 'hover' | 'click' | 'preview';
 const soundKey = 'portfolio-sound';
 const presetKey = 'portfolio-sound-preset';
 const soundChangeEvent = 'portfolio-sound-change';
+const volumeBoost = 1.8;
 let audioContext: AudioContext | null = null;
 
 const presets: Array<{ id: SoundPreset; label: string; description: string }> = [
@@ -58,7 +59,7 @@ function tone(frequency: number, duration: number, volume: number, delay = 0, wa
   oscillator.frequency.setValueAtTime(frequency, start);
   oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.06, start + duration);
   gain.gain.setValueAtTime(0.0001, start);
-  gain.gain.exponentialRampToValueAtTime(volume, start + 0.005);
+  gain.gain.exponentialRampToValueAtTime(volume * volumeBoost, start + 0.005);
   gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
   oscillator.connect(gain);
   gain.connect(currentContext.destination);
@@ -77,7 +78,7 @@ function waterDrop(hover: boolean) {
   oscillator.frequency.setValueAtTime(hover ? 720 : 880, start);
   oscillator.frequency.exponentialRampToValueAtTime(hover ? 430 : 360, start + duration);
   gain.gain.setValueAtTime(0.0001, start);
-  gain.gain.exponentialRampToValueAtTime(hover ? 0.009 : 0.035, start + 0.006);
+  gain.gain.exponentialRampToValueAtTime((hover ? 0.009 : 0.035) * volumeBoost, start + 0.006);
   gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
   oscillator.connect(gain);
   gain.connect(currentContext.destination);
