@@ -58,6 +58,7 @@ export function PocketPiano() {
   const contextRef = useRef<AudioContext | null>(null);
   const voicesRef = useRef<Map<number, Voice>>(new Map());
   const sustainRef = useRef(false);
+  const heldPitchKeysRef = useRef<Set<string>>(new Set());
   const heldNotesRef = useRef<Set<number>>(new Set());
   const sustainedNotesRef = useRef<Set<number>>(new Set());
   const whiteNotes = useMemo(() => notes.filter((note) => !note.accidental), []);
@@ -182,10 +183,12 @@ export function PocketPiano() {
     setPitchBend(value);
     const now = contextRef.current?.currentTime ?? 0;
     voicesRef.current.forEach((voice) => {
-      voice.oscillators[0].detune.setValueAtTime(value * 100, now);
-      voice.oscillators[1].detune.setValueAtTime((value * 100) + 3, now);
+      voice.oscillators[0].detune.cancelScheduledValues(now);
+      voice.oscillators[1].detune.cancelScheduledValues(now);
+      voice.oscillators[0].detune.linearRampToValueAtTime(value * 100, now + 0.08);
+      voice.oscillators[1].detune.linearRampToValueAtTime((value * 100) + 3, now + 0.08);
     });
-    setLastPlayed(`Pitch bend ${value > 0 ? '+' : ''}${value} semitone${Math.abs(value) === 1 ? '' : 's'}`);
+    setLastPlayed(value === 0 ? 'Pitch returned to center' : `Pitch bending ${value > 0 ? 'up' : 'down'} · release to center`);
   }, []);
 
   const updateModulation = useCallback((next: number) => {
@@ -222,8 +225,10 @@ export function PocketPiano() {
       }
 
       const command = event.code;
-      if (command === 'Digit1') updatePitchBend(pitchBend - 1);
-      else if (command === 'Digit2') updatePitchBend(pitchBend + 1);
+      if (command === 'Digit1' || command === 'Digit2') {
+        heldPitchKeysRef.current.add(command);
+        updatePitchBend(command === 'Digit1' ? -2 : 2);
+      }
       else if (command.startsWith('Digit') && Number(command.slice(5)) >= 3 && Number(command.slice(5)) <= 8) updateModulation(Number(command.slice(5)) - 3);
       else if (command === 'KeyZ') shiftOctave(octave - 1);
       else if (command === 'KeyX') shiftOctave(octave + 1);
@@ -234,22 +239,37 @@ export function PocketPiano() {
     }
 
     function keyUp(event: KeyboardEvent) {
+      if (event.code === 'Digit1' || event.code === 'Digit2') {
+        heldPitchKeysRef.current.delete(event.code);
+        const remaining = heldPitchKeysRef.current.has('Digit2') ? 2 : heldPitchKeysRef.current.has('Digit1') ? -2 : 0;
+        updatePitchBend(remaining);
+        event.preventDefault();
+        return;
+      }
+
       const note = keyMap.get(event.key.toLowerCase());
       if (!note) return;
       event.preventDefault();
       stopNote(note);
     }
 
+    function windowBlur() {
+      heldPitchKeysRef.current.clear();
+      updatePitchBend(0);
+      stopAllNotes();
+    }
+
     window.addEventListener('keydown', keyDown);
     window.addEventListener('keyup', keyUp);
-    window.addEventListener('blur', stopAllNotes);
+    window.addEventListener('blur', windowBlur);
     return () => {
       window.removeEventListener('keydown', keyDown);
       window.removeEventListener('keyup', keyUp);
-      window.removeEventListener('blur', stopAllNotes);
-      stopAllNotes();
+      window.removeEventListener('blur', windowBlur);
     };
-  }, [octave, pitchBend, shiftOctave, startNote, stopAllNotes, stopNote, updateModulation, updatePitchBend, updateVelocity, velocity]);
+  }, [octave, shiftOctave, startNote, stopAllNotes, stopNote, updateModulation, updatePitchBend, updateVelocity, velocity]);
+
+  useEffect(() => () => stopAllNotes(), [stopAllNotes]);
 
   function pressNote(event: ReactPointerEvent<HTMLButtonElement>, note: PianoNote) {
     event.preventDefault();
@@ -268,6 +288,25 @@ export function PocketPiano() {
       // The pointer may already have been released by the browser.
     }
     stopNote(note);
+  }
+
+  function pressPitch(event: ReactPointerEvent<HTMLButtonElement>, amount: -2 | 2) {
+    event.preventDefault();
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {
+      // Synthetic pointer events may not create a capturable pointer session.
+    }
+    updatePitchBend(amount);
+  }
+
+  function releasePitch(event: ReactPointerEvent<HTMLButtonElement>) {
+    try {
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+    } catch {
+      // The pointer may already have been released by the browser.
+    }
+    updatePitchBend(0);
   }
 
   function keyButton(note: PianoNote, className: string, style?: CSSProperties) {
@@ -317,9 +356,8 @@ export function PocketPiano() {
         <div className="performance-group performance-pitch" role="group" aria-label="Pitch bend">
           <div className="performance-heading"><span>Pitch bend</span><output>{pitchBend > 0 ? '+' : ''}{pitchBend}</output></div>
           <div className="performance-actions">
-            <button type="button" disabled={pitchBend === -2} data-sound-control onClick={() => updatePitchBend(pitchBend - 1)}><kbd>1</kbd><Minus size={13} aria-hidden="true" /><span className="control-label">Lower pitch</span></button>
-            <button type="button" data-sound-control onClick={() => updatePitchBend(0)}><span>Reset</span></button>
-            <button type="button" disabled={pitchBend === 2} data-sound-control onClick={() => updatePitchBend(pitchBend + 1)}><kbd>2</kbd><Plus size={13} aria-hidden="true" /><span className="control-label">Raise pitch</span></button>
+            <button type="button" aria-pressed={pitchBend === -2} data-sound-control onPointerDown={(event) => pressPitch(event, -2)} onPointerUp={releasePitch} onPointerCancel={releasePitch}><kbd>1</kbd><Minus size={13} aria-hidden="true" /><span>Hold</span><span className="control-label">to bend pitch down</span></button>
+            <button type="button" aria-pressed={pitchBend === 2} data-sound-control onPointerDown={(event) => pressPitch(event, 2)} onPointerUp={releasePitch} onPointerCancel={releasePitch}><kbd>2</kbd><Plus size={13} aria-hidden="true" /><span>Hold</span><span className="control-label">to bend pitch up</span></button>
           </div>
         </div>
 
