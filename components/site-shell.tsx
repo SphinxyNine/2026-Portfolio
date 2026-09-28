@@ -1,12 +1,13 @@
 'use client';
 
-import { ArrowRight, BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Layers3, Menu, PackageOpen, SearchCheck, ShoppingBag, Workflow, Wrench, X } from 'lucide-react';
+import { ArrowRight, BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Layers3, PackageOpen, SearchCheck, ShoppingBag, Workflow, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { profile } from '@/data/portfolio';
 import { GitHubIcon, LinkedInIcon } from './brand-icons';
 import { CopyEmail, ThemeToggle } from './contact-controls';
+import { SoundEffects, SoundToggle } from './sound-controls';
 
 const navigation = [
   { label: 'Projects', icon: Layers3, route: '/work' },
@@ -42,6 +43,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     mobileMenu.current?.querySelector<HTMLAnchorElement>('a')?.focus();
     const escape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -55,6 +58,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     window.addEventListener('popstate', close);
     media.addEventListener('change', close);
     return () => {
+      document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', escape);
       window.removeEventListener('popstate', close);
       media.removeEventListener('change', close);
@@ -116,8 +120,13 @@ export function SiteShell({ children }: { children: ReactNode }) {
     );
   }
 
+  function preferenceControls() {
+    return <div className="preference-controls"><ThemeToggle /><SoundToggle /></div>;
+  }
+
   return (
     <div className="site-shell">
+      <SoundEffects />
       <a className="skip-link" href="#main-content">Skip to content</a>
       <aside className="desktop-sidebar" aria-label="Profile and navigation">
         <Link className="sidebar-brand" href="/" aria-label={`${profile.shortName} — go to overview`}><ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}</Link>
@@ -126,7 +135,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         {labNav()}
         <div className="sidebar-footer">
           <SocialLinks />
-          <ThemeToggle />
+          {preferenceControls()}
           <CopyEmail />
         </div>
       </aside>
@@ -134,19 +143,17 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <Link className="mobile-brand" href="/" onClick={() => setMenuOpen(false)} aria-label={`${profile.shortName} — go to overview`}>
           <ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}
         </Link>
-        <button ref={menuButton} className="icon-button menu-button" type="button" onClick={() => setMenuOpen(!menuOpen)}
+        <button ref={menuButton} className={menuOpen ? 'icon-button menu-button is-open' : 'icon-button menu-button'} type="button" onClick={() => setMenuOpen(!menuOpen)}
           aria-expanded={menuOpen} aria-controls="mobile-menu" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>
-          {menuOpen ? <X size={21} /> : <Menu size={21} />}
+          <span className="menu-glyph" aria-hidden="true"><span /><span /><span /></span>
         </button>
       </header>
-      {menuOpen && (
-        <div id="mobile-menu" ref={mobileMenu} className="mobile-menu">
-          {exploreNav()}
-          {nav()}
-          {labNav()}
-          <div className="mobile-menu-footer"><SocialLinks /><ThemeToggle /><CopyEmail /></div>
-        </div>
-      )}
+      <div id="mobile-menu" ref={mobileMenu} className={menuOpen ? 'mobile-menu is-open' : 'mobile-menu'} aria-hidden={!menuOpen} inert={!menuOpen}>
+        {exploreNav()}
+        {nav()}
+        {labNav()}
+        <div className="mobile-menu-footer"><SocialLinks />{preferenceControls()}<CopyEmail /></div>
+      </div>
       <main id="main-content" className="site-main" tabIndex={-1}>
         {children}
         <footer className="site-footer">
