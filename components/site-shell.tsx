@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { profile } from '@/data/portfolio';
 import { GitHubIcon, LinkedInIcon } from './brand-icons';
 import { CopyEmail, ThemeToggle } from './contact-controls';
-import { SoundEffects, SoundToggle } from './sound-controls';
+import { SoundEffects, SoundSettings } from './sound-controls';
 
 const navigation = [
   { label: 'Projects', icon: Layers3, route: '/work' },
@@ -121,7 +121,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   }
 
   function preferenceControls() {
-    return <div className="preference-controls"><ThemeToggle /><SoundToggle /></div>;
+    return <div className="preference-controls"><ThemeToggle /><SoundSettings /></div>;
   }
 
   return (

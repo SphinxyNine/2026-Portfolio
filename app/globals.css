@@ -110,9 +110,27 @@
   .theme-choice:hover { color: var(--text); background: var(--surface); }
   .theme-choice[aria-pressed="true"] { color: var(--text); background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--line); }
   .preference-controls { display: flex; width: fit-content; align-items: center; gap: 0.55rem; }
-  .sound-toggle { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); color: var(--muted); }
-  .sound-toggle:hover { border-color: var(--line-bright); color: var(--text); background: var(--surface); }
-  .sound-toggle[aria-pressed="true"] { border-color: var(--line-bright); color: var(--text); background: var(--surface-raised); }
+  .sound-settings { position: relative; }
+  .sound-settings-trigger { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); color: var(--muted); }
+  .sound-settings-trigger:hover, .sound-settings-trigger[aria-expanded="true"] { border-color: var(--line-bright); color: var(--text); background: var(--surface-raised); }
+  .sound-settings-panel { position: absolute; right: 0; bottom: calc(100% + 0.7rem); z-index: 80; width: 220px; padding: 0.85rem; border: 1px solid var(--line-bright); border-radius: var(--radius); background: var(--surface); box-shadow: 0 18px 45px color-mix(in srgb, var(--bg) 70%, transparent); animation: sound-panel-in 160ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .desktop-sidebar .sound-settings-panel { right: -4.5rem; }
+  .sound-settings-heading { display: flex; justify-content: space-between; gap: 0.8rem; align-items: flex-start; }
+  .sound-settings-heading h2 { margin-top: 0.2rem; font-size: 0.9rem; }
+  .sound-settings-heading > button { display: grid; width: 28px; height: 28px; place-items: center; border: 0; border-radius: 999px; background: transparent; color: var(--muted); }
+  .sound-settings-heading > button:hover { background: var(--surface-raised); color: var(--text); }
+  .sound-power { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.65rem; width: 100%; align-items: center; margin-top: 0.75rem; padding: 0.7rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); color: var(--muted); text-align: left; }
+  .sound-power[aria-pressed="true"] { color: var(--brand-jade); border-color: var(--line-bright); }
+  .sound-power > span, .sound-presets button > span:last-child { display: grid; gap: 0.08rem; }
+  .sound-power strong, .sound-presets strong { color: var(--text); font-size: 0.72rem; }
+  .sound-power small, .sound-presets small { color: var(--muted); font-size: 0.58rem; line-height: 1.35; }
+  .sound-presets { display: grid; gap: 0.35rem; margin: 0.75rem 0 0; padding: 0.75rem 0 0; border: 0; border-top: 1px solid var(--line); }
+  .sound-presets legend { padding: 0 0 0.45rem; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .sound-presets button { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.6rem; width: 100%; align-items: center; padding: 0.55rem; border: 1px solid transparent; border-radius: var(--radius); background: transparent; text-align: left; }
+  .sound-presets button:hover { background: var(--bg); border-color: var(--line); }
+  .sound-presets button[aria-pressed="true"] { background: color-mix(in srgb, var(--brand-jade) 8%, var(--bg)); border-color: var(--line-bright); }
+  .sound-preview-icon { display: grid; width: 25px; height: 25px; place-items: center; border: 1px solid var(--line); border-radius: 999px; color: var(--brand-jade); }
+  @keyframes sound-panel-in { from { opacity: 0; transform: translateY(5px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
   /* Snapshot the final colors rather than intermediate hover/color transitions. */
   html[data-theme-transition="active"] *,
   html[data-theme-transition="active"] *::before,
@@ -496,6 +514,7 @@
     .mobile-menu .nav-link, .mobile-menu .sidebar-planned-row { min-height: 42px; padding: 0.5rem 0.75rem; font-size: 0.86rem; }
     .mobile-menu .theme-selector { grid-template-columns: repeat(3, 34px); }
     .mobile-menu .theme-choice { width: 34px; height: 34px; }
+    .mobile-menu .sound-settings-panel { right: auto; left: 0; }
     .page { padding-top: 2.5rem; }
   }
   @media (max-width: 700px) {
