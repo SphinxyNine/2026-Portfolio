@@ -131,8 +131,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <aside className="desktop-sidebar" aria-label="Profile and navigation">
         <Link className="sidebar-brand" href="/" aria-label={`${profile.shortName} — go to overview`}><ClefBass className="brand-mark" size={16} aria-hidden="true" />{profile.shortName}</Link>
-        {exploreNav()}
         {nav()}
+        {exploreNav()}
         {labNav()}
         <div className="sidebar-footer">
           <SocialLinks />
@@ -150,8 +150,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
         </button>
       </header>
       <div id="mobile-menu" ref={mobileMenu} className={menuOpen ? 'mobile-menu is-open' : 'mobile-menu'} aria-hidden={!menuOpen} inert={!menuOpen}>
-        {exploreNav()}
         {nav()}
+        {exploreNav()}
         {labNav()}
         <div className="mobile-menu-footer"><SocialLinks />{preferenceControls()}<CopyEmail /></div>
       </div>
