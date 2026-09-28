@@ -1,5 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import { githubContributionSnapshot as snapshot } from '@/data/github-contributions';
+import { githubProfileSummary as profileSummary } from '@/data/github-profile-summary';
+import { GitHubIcon } from './brand-icons';
 
 function isoDate(date: Date) {
   return date.toISOString().slice(0, 10);
@@ -30,7 +32,9 @@ const monthLabels = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Ju
 
 export function GitHubContributions() {
   const days = contributionDays();
-  const totalLabel = new Intl.NumberFormat('en-US').format(snapshot.total);
+  const publicTotalLabel = new Intl.NumberFormat('en-US').format(snapshot.total);
+  const profileTotalLabel = new Intl.NumberFormat('en-US').format(profileSummary.total);
+  const nonPublicTotal = Math.max(profileSummary.total - snapshot.total, 0);
 
   return (
     <section className="home-section github-section" aria-labelledby="github-heading">
@@ -42,28 +46,56 @@ export function GitHubContributions() {
         </a>
       </header>
       <div className="github-calendar-shell">
-        <div className="github-calendar-scroll">
-          <div className="github-months" aria-hidden="true">
-            {monthLabels.map((month) => <span key={month}>{month}</span>)}
+        <div className="github-summary">
+          <div className="github-total">
+            <span className="github-mark" aria-hidden="true"><GitHubIcon width={22} height={22} /></span>
+            <div>
+              <strong>{profileTotalLabel}</strong>
+              <span>contributions in the last year</span>
+            </div>
+            <span className="github-total-badge">Profile total</span>
           </div>
-          <div className="github-calendar-grid" role="img" aria-label={`${totalLabel} public GitHub contributions from ${snapshot.from} to ${snapshot.to}`}>
-            {days.map((day) => day.empty ? (
-              <span className="contribution-day is-empty" key={day.date} aria-hidden="true" />
-            ) : (
-              <span
-                className="contribution-day"
-                data-level={day.level}
-                key={day.date}
-                title={`${day.count} contribution${day.count === 1 ? '' : 's'} on ${day.date}`}
-                aria-hidden="true"
-              />
-            ))}
+          <dl className="github-breakdown">
+            <div><dt>Public</dt><dd>{publicTotalLabel}</dd></div>
+            <div><dt>Not publicly exposed</dt><dd>{nonPublicTotal}</dd></div>
+          </dl>
+        </div>
+        <div className="github-chart-heading">
+          <p>Public activity calendar</p>
+          <p>{snapshot.from} — {snapshot.to}</p>
+        </div>
+        <div className="github-chart-body">
+          <div className="github-weekdays" aria-hidden="true">
+            <span>Mon</span><span>Wed</span><span>Fri</span>
+          </div>
+          <div className="github-calendar-scroll">
+            <div className="github-months" aria-hidden="true">
+              {monthLabels.map((month) => <span key={month}>{month}</span>)}
+            </div>
+            <div className="github-calendar-grid" role="img" aria-label={`${publicTotalLabel} public GitHub contributions from ${snapshot.from} to ${snapshot.to}`}>
+              {days.map((day) => day.empty ? (
+                <span className="contribution-day is-empty" key={day.date} aria-hidden="true" />
+              ) : (
+                <span
+                  className="contribution-day"
+                  data-level={day.level}
+                  key={day.date}
+                  title={`${day.count} contribution${day.count === 1 ? '' : 's'} on ${day.date}`}
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
           </div>
         </div>
         <div className="github-calendar-footer">
-          <p><strong>{totalLabel}</strong> public contributions in the last 12 months</p>
-          <p>Snapshot updated {snapshot.refreshedAt}</p>
+          <p>The daily grid contains public activity. Your signed-in profile total also includes activity GitHub does not expose publicly.</p>
+          <div className="github-legend" aria-label="Contribution intensity">
+            <span>Less</span>
+            {[0, 1, 2, 3, 4].map((level) => <i className="contribution-day" data-level={level} key={level} aria-hidden="true" />)}
+            <span>More</span>
+          </div>
         </div>
+        <p className="github-snapshot-note">Profile total supplied {profileSummary.capturedAt} · Public calendar refreshed {snapshot.refreshedAt}</p>
       </div>
     </section>
   );
