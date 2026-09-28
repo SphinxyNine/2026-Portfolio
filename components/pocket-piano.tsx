@@ -14,6 +14,8 @@ type PianoNote = {
 type Voice = {
   oscillators: OscillatorNode[];
   envelope: GainNode;
+  lfo: OscillatorNode;
+  modulationGain: GainNode;
 };
 
 const notes: PianoNote[] = [
@@ -33,6 +35,7 @@ const notes: PianoNote[] = [
 ];
 
 const keyMap = new Map(notes.map((note) => [note.keyboardKey.toLowerCase(), note]));
+const modulationLevels = [0, 1, 2, 3, 4, 5];
 
 function frequencyFor(octave: number, semitone: number) {
   const midi = 12 * (octave + 1) + semitone;
@@ -46,32 +49,51 @@ function displayedNote(note: PianoNote, octave: number) {
 export function PocketPiano() {
   const [octave, setOctave] = useState(4);
   const [volume, setVolume] = useState(0.7);
+  const [velocity, setVelocity] = useState(96);
+  const [pitchBend, setPitchBend] = useState(0);
+  const [modulation, setModulation] = useState(0);
+  const [sustain, setSustain] = useState(false);
   const [activeNotes, setActiveNotes] = useState<Set<number>>(() => new Set());
   const [lastPlayed, setLastPlayed] = useState('Ready to play');
   const contextRef = useRef<AudioContext | null>(null);
   const voicesRef = useRef<Map<number, Voice>>(new Map());
+  const sustainRef = useRef(false);
+  const heldNotesRef = useRef<Set<number>>(new Set());
+  const sustainedNotesRef = useRef<Set<number>>(new Set());
   const whiteNotes = useMemo(() => notes.filter((note) => !note.accidental), []);
   const blackNotes = useMemo(() => notes.filter((note) => note.accidental), []);
 
-  const stopNote = useCallback((note: PianoNote) => {
+  const releaseVoice = useCallback((note: PianoNote, fast = false) => {
     const voice = voicesRef.current.get(note.semitone);
     if (!voice || !contextRef.current) return;
 
     const now = contextRef.current.currentTime;
+    const release = fast ? 0.07 : 0.28;
     voice.envelope.gain.cancelScheduledValues(now);
-    voice.envelope.gain.setValueAtTime(Math.max(voice.envelope.gain.value, 0.0001), now);
-    voice.envelope.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
-    voice.oscillators.forEach((oscillator) => oscillator.stop(now + 0.24));
+    voice.envelope.gain.setTargetAtTime(0.0001, now, fast ? 0.018 : 0.07);
+    voice.oscillators.forEach((oscillator) => oscillator.stop(now + release));
+    voice.lfo.stop(now + release);
     voicesRef.current.delete(note.semitone);
+    sustainedNotesRef.current.delete(note.semitone);
+  }, []);
+
+  const stopNote = useCallback((note: PianoNote) => {
+    heldNotesRef.current.delete(note.semitone);
     setActiveNotes((current) => {
       const next = new Set(current);
       next.delete(note.semitone);
       return next;
     });
-  }, []);
+
+    if (sustainRef.current) {
+      sustainedNotesRef.current.add(note.semitone);
+      return;
+    }
+    releaseVoice(note);
+  }, [releaseVoice]);
 
   const startNote = useCallback((note: PianoNote) => {
-    if (voicesRef.current.has(note.semitone)) return;
+    if (voicesRef.current.has(note.semitone)) releaseVoice(note, true);
 
     const AudioContextClass = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!AudioContextClass) return;
@@ -83,24 +105,34 @@ export function PocketPiano() {
     const frequency = frequencyFor(octave, note.semitone);
     const envelope = audioContext.createGain();
     const harmonicGain = audioContext.createGain();
+    const modulationGain = audioContext.createGain();
     const filter = audioContext.createBiquadFilter();
     const fundamental = audioContext.createOscillator();
     const harmonic = audioContext.createOscillator();
+    const lfo = audioContext.createOscillator();
+    const peak = 0.4 * volume * (velocity / 127);
 
     fundamental.type = 'triangle';
     fundamental.frequency.setValueAtTime(frequency, now);
+    fundamental.detune.setValueAtTime(pitchBend * 100, now);
     harmonic.type = 'sine';
     harmonic.frequency.setValueAtTime(frequency * 2, now);
-    harmonic.detune.setValueAtTime(3, now);
+    harmonic.detune.setValueAtTime((pitchBend * 100) + 3, now);
     harmonicGain.gain.setValueAtTime(0.16, now);
+    lfo.type = 'sine';
+    lfo.frequency.setValueAtTime(5.2, now);
+    modulationGain.gain.setValueAtTime(modulation * 5, now);
     filter.type = 'lowpass';
     filter.frequency.setValueAtTime(2800, now);
     filter.Q.setValueAtTime(0.7, now);
     envelope.gain.setValueAtTime(0.0001, now);
-    envelope.gain.exponentialRampToValueAtTime(0.32 * volume, now + 0.012);
-    envelope.gain.exponentialRampToValueAtTime(0.085 * volume, now + 0.9);
-    envelope.gain.exponentialRampToValueAtTime(0.0001, now + 4);
+    envelope.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), now + 0.012);
+    envelope.gain.exponentialRampToValueAtTime(Math.max(peak * 0.27, 0.0002), now + 0.9);
+    envelope.gain.exponentialRampToValueAtTime(0.0001, now + 5);
 
+    lfo.connect(modulationGain);
+    modulationGain.connect(fundamental.detune);
+    modulationGain.connect(harmonic.detune);
     fundamental.connect(envelope);
     harmonic.connect(harmonicGain);
     harmonicGain.connect(envelope);
@@ -108,24 +140,97 @@ export function PocketPiano() {
     filter.connect(audioContext.destination);
     fundamental.start(now);
     harmonic.start(now);
+    lfo.start(now);
 
-    voicesRef.current.set(note.semitone, { oscillators: [fundamental, harmonic], envelope });
+    voicesRef.current.set(note.semitone, {
+      oscillators: [fundamental, harmonic],
+      envelope,
+      lfo,
+      modulationGain,
+    });
+    heldNotesRef.current.add(note.semitone);
+    sustainedNotesRef.current.delete(note.semitone);
     setActiveNotes((current) => new Set(current).add(note.semitone));
-    setLastPlayed(`${displayedNote(note, octave)} · ${Math.round(frequency)} Hz`);
-  }, [octave, volume]);
+    setLastPlayed(`${displayedNote(note, octave)} · ${Math.round(frequency)} Hz · velocity ${velocity}`);
+  }, [modulation, octave, pitchBend, releaseVoice, velocity, volume]);
 
   const stopAllNotes = useCallback(() => {
-    notes.forEach(stopNote);
-  }, [stopNote]);
+    heldNotesRef.current.clear();
+    sustainedNotesRef.current.clear();
+    notes.forEach((note) => releaseVoice(note, true));
+    setActiveNotes(new Set());
+  }, [releaseVoice]);
+
+  const updateSustain = useCallback((next: boolean) => {
+    sustainRef.current = next;
+    setSustain(next);
+    if (next) {
+      setLastPlayed('Sustain enabled');
+      return;
+    }
+
+    sustainedNotesRef.current.forEach((semitone) => {
+      const note = notes.find((item) => item.semitone === semitone);
+      if (note && !heldNotesRef.current.has(semitone)) releaseVoice(note);
+    });
+    sustainedNotesRef.current.clear();
+    setLastPlayed('Sustain released');
+  }, [releaseVoice]);
+
+  const updatePitchBend = useCallback((next: number) => {
+    const value = Math.max(-2, Math.min(2, next));
+    setPitchBend(value);
+    const now = contextRef.current?.currentTime ?? 0;
+    voicesRef.current.forEach((voice) => {
+      voice.oscillators[0].detune.setValueAtTime(value * 100, now);
+      voice.oscillators[1].detune.setValueAtTime((value * 100) + 3, now);
+    });
+    setLastPlayed(`Pitch bend ${value > 0 ? '+' : ''}${value} semitone${Math.abs(value) === 1 ? '' : 's'}`);
+  }, []);
+
+  const updateModulation = useCallback((next: number) => {
+    const value = Math.max(0, Math.min(5, next));
+    setModulation(value);
+    const now = contextRef.current?.currentTime ?? 0;
+    voicesRef.current.forEach((voice) => voice.modulationGain.gain.setValueAtTime(value * 5, now));
+    setLastPlayed(value === 0 ? 'Modulation off' : `Modulation level ${value}`);
+  }, []);
+
+  const updateVelocity = useCallback((next: number) => {
+    const value = Math.max(32, Math.min(127, next));
+    setVelocity(value);
+    setLastPlayed(`Velocity ${value}`);
+  }, []);
+
+  const shiftOctave = useCallback((nextOctave: number) => {
+    const value = Math.max(2, Math.min(6, nextOctave));
+    stopAllNotes();
+    setOctave(value);
+    setLastPlayed(`Range changed to C${value}–C${value + 1}`);
+  }, [stopAllNotes]);
 
   useEffect(() => {
     function keyDown(event: KeyboardEvent) {
       if (event.repeat || event.metaKey || event.ctrlKey || event.altKey) return;
-      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLSelectElement) return;
+
       const note = keyMap.get(event.key.toLowerCase());
-      if (!note) return;
+      if (note) {
+        event.preventDefault();
+        startNote(note);
+        return;
+      }
+
+      const command = event.code;
+      if (command === 'Digit1') updatePitchBend(pitchBend - 1);
+      else if (command === 'Digit2') updatePitchBend(pitchBend + 1);
+      else if (command.startsWith('Digit') && Number(command.slice(5)) >= 3 && Number(command.slice(5)) <= 8) updateModulation(Number(command.slice(5)) - 3);
+      else if (command === 'KeyZ') shiftOctave(octave - 1);
+      else if (command === 'KeyX') shiftOctave(octave + 1);
+      else if (command === 'KeyC') updateVelocity(velocity - 8);
+      else if (command === 'KeyV') updateVelocity(velocity + 8);
+      else return;
       event.preventDefault();
-      startNote(note);
     }
 
     function keyUp(event: KeyboardEvent) {
@@ -144,13 +249,7 @@ export function PocketPiano() {
       window.removeEventListener('blur', stopAllNotes);
       stopAllNotes();
     };
-  }, [startNote, stopAllNotes, stopNote]);
-
-  function shiftOctave(nextOctave: number) {
-    stopAllNotes();
-    setOctave(nextOctave);
-    setLastPlayed(`Range changed to C${nextOctave}–C${nextOctave + 1}`);
-  }
+  }, [octave, pitchBend, shiftOctave, startNote, stopAllNotes, stopNote, updateModulation, updatePitchBend, updateVelocity, velocity]);
 
   function pressNote(event: ReactPointerEvent<HTMLButtonElement>, note: PianoNote) {
     event.preventDefault();
@@ -200,30 +299,61 @@ export function PocketPiano() {
           <h2 id="piano-heading">Pocket Keys</h2>
           <p>Tap the keys or use your computer keyboard.</p>
         </div>
-        <div className="piano-controls">
-          <div className="octave-control" aria-label="Piano octave">
-            <button type="button" disabled={octave === 2} aria-label="Lower octave" data-sound-control onClick={() => shiftOctave(octave - 1)}>
-              <Minus size={15} aria-hidden="true" />
-            </button>
-            <span>C{octave}–C{octave + 1}</span>
-            <button type="button" disabled={octave === 6} aria-label="Higher octave" data-sound-control onClick={() => shiftOctave(octave + 1)}>
-              <Plus size={15} aria-hidden="true" />
-            </button>
-          </div>
-          <label className="piano-volume">
-            <Volume2 size={15} aria-hidden="true" />
-            <input
-              type="range"
-              min="0.25"
-              max="1"
-              step="0.05"
-              value={volume}
-              aria-label="Instrument volume"
-              onChange={(event) => setVolume(Number(event.target.value))}
-            />
-          </label>
-        </div>
+        <label className="piano-volume">
+          <Volume2 size={15} aria-hidden="true" />
+          <input
+            type="range"
+            min="0.25"
+            max="1"
+            step="0.05"
+            value={volume}
+            aria-label="Instrument volume"
+            onChange={(event) => setVolume(Number(event.target.value))}
+          />
+        </label>
       </header>
+
+      <div className="piano-performance" aria-label="Piano performance controls">
+        <div className="performance-group performance-pitch" role="group" aria-label="Pitch bend">
+          <div className="performance-heading"><span>Pitch bend</span><output>{pitchBend > 0 ? '+' : ''}{pitchBend}</output></div>
+          <div className="performance-actions">
+            <button type="button" disabled={pitchBend === -2} data-sound-control onClick={() => updatePitchBend(pitchBend - 1)}><kbd>1</kbd><Minus size={13} aria-hidden="true" /><span className="control-label">Lower pitch</span></button>
+            <button type="button" data-sound-control onClick={() => updatePitchBend(0)}><span>Reset</span></button>
+            <button type="button" disabled={pitchBend === 2} data-sound-control onClick={() => updatePitchBend(pitchBend + 1)}><kbd>2</kbd><Plus size={13} aria-hidden="true" /><span className="control-label">Raise pitch</span></button>
+          </div>
+        </div>
+
+        <button className="sustain-control" type="button" aria-pressed={sustain} data-sound-control onClick={() => updateSustain(!sustain)}>
+          <span>Sustain</span><strong>{sustain ? 'On' : 'Off'}</strong>
+        </button>
+
+        <div className="performance-group performance-modulation" role="group" aria-label="Modulation level">
+          <div className="performance-heading"><span>Modulation</span><output>{modulation === 0 ? 'Off' : modulation}</output></div>
+          <div className="modulation-actions">
+            {modulationLevels.map((level) => (
+              <button type="button" key={level} aria-pressed={modulation === level} data-sound-control onClick={() => updateModulation(level)}>
+                <kbd>{level + 3}</kbd><span>{level === 0 ? 'Off' : level}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="performance-group performance-octave" role="group" aria-label="Octave range">
+          <div className="performance-heading"><span>Octave</span><output>C{octave}</output></div>
+          <div className="performance-actions">
+            <button type="button" disabled={octave === 2} data-sound-control onClick={() => shiftOctave(octave - 1)}><kbd>Z</kbd><Minus size={13} aria-hidden="true" /><span className="control-label">Lower octave</span></button>
+            <button type="button" disabled={octave === 6} data-sound-control onClick={() => shiftOctave(octave + 1)}><kbd>X</kbd><Plus size={13} aria-hidden="true" /><span className="control-label">Higher octave</span></button>
+          </div>
+        </div>
+
+        <div className="performance-group performance-velocity" role="group" aria-label="Note velocity">
+          <div className="performance-heading"><span>Velocity</span><output>{velocity}</output></div>
+          <div className="performance-actions">
+            <button type="button" disabled={velocity === 32} data-sound-control onClick={() => updateVelocity(velocity - 8)}><kbd>C</kbd><Minus size={13} aria-hidden="true" /><span className="control-label">Lower velocity</span></button>
+            <button type="button" disabled={velocity === 127} data-sound-control onClick={() => updateVelocity(velocity + 8)}><kbd>V</kbd><Plus size={13} aria-hidden="true" /><span className="control-label">Raise velocity</span></button>
+          </div>
+        </div>
+      </div>
 
       <div className="piano-stage">
         <div className="piano-keyboard" role="group" aria-label={`Playable piano from C${octave} to C${octave + 1}`}>
@@ -239,7 +369,7 @@ export function PocketPiano() {
       </div>
 
       <footer className="piano-footer">
-        <p><span>A W S E D F T G Y H U J K</span> on a computer keyboard</p>
+        <p><span>A W S E D F T G Y H U J K</span> plays notes · <span>1–8 Z X C V</span> controls performance</p>
         <p role="status" aria-live="polite">{lastPlayed}</p>
       </footer>
     </section>
