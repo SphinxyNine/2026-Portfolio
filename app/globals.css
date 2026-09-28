@@ -224,21 +224,15 @@
   .post-row p { color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.68rem; text-transform: uppercase; }
   .github-section { padding-bottom: 2.5rem; }
   .github-calendar-shell { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-  .github-summary { display: flex; align-items: stretch; justify-content: space-between; gap: 1.5rem; padding: clamp(1.15rem, 3vw, 1.65rem); border-bottom: 1px solid var(--line); }
+  .github-minimal-summary { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: clamp(1.05rem, 3vw, 1.4rem) clamp(1rem, 3vw, 1.5rem); border-bottom: 1px solid var(--line); }
+  .github-minimal-summary > p { color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.62rem; }
+  .github-minimal-summary > p span { margin: 0 .4rem; }
   .github-total { display: flex; align-items: center; gap: 0.85rem; min-width: 0; }
-  .github-mark { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--brand-jade); background: var(--bg); }
+  .github-mark { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; color: var(--brand-jade); }
   .github-total > div { display: grid; }
-  .github-total strong { color: var(--brand-jade); font-family: var(--font-geist-mono), monospace; font-size: clamp(1.5rem, 1.25rem + .8vw, 2rem); font-weight: 550; line-height: 1; }
-  .github-total > div span { margin-top: 0.3rem; color: var(--text-soft); font-size: 0.8rem; }
-  .github-total-badge { align-self: flex-start; margin-left: 0.35rem; padding: 0.2rem 0.5rem; border: 1px solid var(--line-bright); border-radius: 999px; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.58rem; text-transform: uppercase; }
-  .github-breakdown { display: grid; grid-template-columns: repeat(2, minmax(100px, 1fr)); min-width: 250px; border: 1px solid var(--line); border-radius: var(--radius); }
-  .github-breakdown > div { display: flex; flex-direction: column-reverse; justify-content: center; gap: 0.2rem; padding: 0.75rem 1rem; }
-  .github-breakdown > div + div { border-left: 1px solid var(--line); }
-  .github-breakdown dt { color: var(--muted); font-size: 0.63rem; line-height: 1.35; text-transform: uppercase; letter-spacing: .05em; }
-  .github-breakdown dd { color: var(--text); font-family: var(--font-geist-mono), monospace; font-size: 1rem; }
-  .github-chart-heading { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem clamp(1rem, 3vw, 1.5rem) 0.55rem; }
-  .github-chart-heading p { color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: .05em; }
-  .github-chart-body { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 0.7rem; padding: 0 clamp(1rem, 3vw, 1.5rem) 1rem; }
+  .github-total strong { color: var(--brand-jade); font-family: var(--font-geist-mono), monospace; font-size: clamp(1.35rem, 1.15rem + .6vw, 1.7rem); font-weight: 550; line-height: 1; }
+  .github-total > div span { margin-top: 0.2rem; color: var(--muted); font-size: 0.72rem; }
+  .github-chart-body { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 0.7rem; padding: 1.15rem clamp(1rem, 3vw, 1.5rem); }
   .github-weekdays { display: grid; grid-template-rows: repeat(7, 10px); gap: 4px; padding-top: 1.1rem; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.52rem; line-height: 10px; }
   .github-weekdays span:nth-child(1) { grid-row: 2; }
   .github-weekdays span:nth-child(2) { grid-row: 4; }
@@ -253,10 +247,9 @@
   .contribution-day[data-level="4"] { background: var(--accent); }
   .contribution-day.is-empty { visibility: hidden; }
   .github-calendar-footer { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin: 0 clamp(1rem, 3vw, 1.5rem); padding: 0.9rem 0; border-top: 1px solid var(--line); }
-  .github-calendar-footer > p { max-width: 68ch; color: var(--muted); font-size: 0.68rem; line-height: 1.5; }
+  .github-calendar-footer > p { color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.58rem; }
   .github-legend { display: flex; align-items: center; gap: 0.3rem; flex: 0 0 auto; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.58rem; }
   .github-legend .contribution-day { display: inline-block; width: 8px; height: 8px; }
-  .github-snapshot-note { padding: 0.7rem clamp(1rem, 3vw, 1.5rem); background: var(--bg); border-top: 1px solid var(--line); color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.58rem; }
   .placeholder-panel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.1rem; align-items: start; padding: 1.4rem 0; border-block: 1px solid var(--line); }
   .placeholder-panel > svg { margin-top: 0.1rem; color: var(--muted); }
   .placeholder-panel h2 { margin: 0.35rem 0 0.5rem; font-size: 1.1rem; }
@@ -368,8 +361,7 @@
     .home-experience-row > p:last-child { text-align: left; }
     .home-credential-grid { grid-template-columns: 1fr; }
     .home-credential-card { min-height: 190px; }
-    .github-summary { align-items: flex-start; flex-direction: column; }
-    .github-breakdown { width: 100%; min-width: 0; }
+    .github-minimal-summary { align-items: flex-start; flex-direction: column; gap: 0.7rem; }
     .github-calendar-footer { align-items: flex-start; flex-direction: column; }
     .overview-highlights { grid-template-columns: 1fr; }
     .overview-highlights li { grid-template-columns: 7.2rem minmax(0, 1fr); align-items: baseline; padding-inline: 0; }
@@ -388,9 +380,6 @@
     .mobile-header, .mobile-menu { padding-inline: 1.25rem; }
     .expertise { font-size: 0.75rem; gap: 0.35rem 0.65rem; }
     .expertise li:not(:last-child)::after { margin-left: 0.65rem; }
-    .github-total { align-items: flex-start; flex-wrap: wrap; }
-    .github-total-badge { margin-left: 0; }
-    .github-chart-heading { align-items: flex-start; flex-direction: column; gap: 0.2rem; }
     .github-chart-body { grid-template-columns: 18px minmax(0, 1fr); gap: 0.4rem; }
     .github-weekdays { grid-template-rows: repeat(7, 5px); gap: 1px; padding-top: 0.85rem; font-size: 0.42rem; line-height: 5px; }
     .github-months { min-width: 0; font-size: 0.48rem; }
