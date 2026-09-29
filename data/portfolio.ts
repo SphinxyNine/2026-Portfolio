@@ -11,8 +11,8 @@ export const profile = {
   name: 'Zy Fausto', shortName: 'Zy Fausto', overviewName: 'Zyron Jade Fausto',
   title: 'Web Developer & Automation Specialist',
   expertise: ['Web Development', 'Funnels', 'CRM', 'Automation'],
-  location: 'Philippines', photo: '/profile/dazayy.jpeg',
-  photoAlt: 'Illustrated character avatar chosen by Zy Fausto',
+  location: 'Philippines', photo: '/profile/zy-portfolio.jpeg',
+  photoAlt: 'Portrait of Zy Fausto',
   email: 'jade.fausto17@gmail.com',
   resume: '', // Add only the updated, approved résumé.
   introduction: "I build responsive websites, funnels, CRM workflows, and business automations. My work combines development, GoHighLevel, integrations, analytics, and practical technical support.",
