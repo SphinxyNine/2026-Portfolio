@@ -1,25 +1,75 @@
 import type { Metadata } from 'next';
-import { FlaskConical, History } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
 import { PageIntro } from '@/components/page-intro';
 
-const archiveShelves = [
+const portfolioHistory = [
   {
-    eyebrow: 'Portfolio history',
-    title: 'Earlier portfolio editions',
-    description: 'Past versions of this portfolio can live here with screenshots, dates, technologies, and a short note about what changed in the next iteration.',
-    status: 'Ready to catalogue',
-    items: ['Screenshots', 'Live or saved links', 'Build notes'],
-    icon: History,
+    title: 'macOS Portfolio',
+    label: 'Interface experiment',
+    description: 'A desktop-inspired portfolio built around macOS-style folders, navigation, and a dock interface.',
+    status: 'Archived edition',
+    image: '/archive/macos-portfolio.jpg',
+    imageAlt: 'macOS-inspired ZDX portfolio homepage',
+    url: 'https://macos-portfolio-rosy-gamma.vercel.app/',
   },
   {
-    eyebrow: 'Experiments',
-    title: 'Prototypes and unfinished builds',
-    description: 'Small tools, learning projects, paused ideas, and useful mistakes can stay visible here without being presented as finished professional work.',
-    status: 'Open collection',
-    items: ['Prototypes', 'Learning builds', 'Paused ideas'],
-    icon: FlaskConical,
+    title: 'ZDX 3D Portfolio',
+    label: '3D portfolio concept',
+    description: 'A dark portfolio iteration exploring 3D presentation, movement, and visual storytelling.',
+    status: 'Archived edition',
+    image: '/archive/3d-portfolio-zdx.jpg',
+    imageAlt: 'ZDX Development 3D portfolio homepage',
+    url: 'https://3d-portfolio-zdx.vercel.app/',
+  },
+  {
+    title: 'Zeta Dev X 2025',
+    label: '2025 portfolio',
+    description: 'A portfolio edition focused on clear, functional web experiences and a direct project-first introduction.',
+    status: 'Archived edition',
+    image: '/archive/zdx-2025-portfolio.jpg',
+    imageAlt: 'Zeta Dev X 2025 portfolio homepage',
+    url: 'https://zdx2025portfolio.vercel.app/',
   },
 ];
+
+const experiments = [
+  {
+    title: 'HMM Cards — Version 1',
+    label: 'Interactive experiment',
+    description: 'An interactive conversation-card experience with question categories, card mixing, language options, and fullscreen play.',
+    status: 'Version 1',
+    image: '/archive/hmm-cards-v1.jpg',
+    imageAlt: 'HMM Cards version 1 interactive question card',
+    url: 'https://hmmcardsversion1.vercel.app/',
+  },
+];
+
+function ArchiveCollection({ id, title, description, items }: { id: string; title: string; description: string; items: typeof portfolioHistory }) {
+  return (
+    <section className="archive-collection" aria-labelledby={id}>
+      <header className="archive-collection-heading">
+        <div><p className="eyebrow">{String(items.length).padStart(2, '0')} {items.length === 1 ? 'entry' : 'entries'}</p><h2 id={id}>{title}</h2></div>
+        <p>{description}</p>
+      </header>
+      <div className="archive-grid">
+        {items.map((item) => (
+          <article className="archive-entry" key={item.url}>
+            <a className="archive-entry-image" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${item.title}`}>
+              <Image src={item.image} alt={item.imageAlt} fill sizes="(max-width: 700px) 100vw, 50vw" />
+            </a>
+            <div className="archive-entry-content">
+              <div className="archive-entry-meta"><span>{item.label}</span><span>{item.status}</span></div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <a className="inline-link" href={item.url} target="_blank" rel="noopener noreferrer">Visit archived site <ArrowUpRight size={15} aria-hidden="true" /></a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export const metadata: Metadata = {
   title: 'Archive',
@@ -38,23 +88,9 @@ export default function ArchivePage() {
 
       <p className="archive-note">Finished client work stays in Projects. Items here keep their honest status: shipped, paused, unfinished, or retired.</p>
 
-      <div className="archive-shelves">
-        {archiveShelves.map(({ eyebrow, title, description, status, items, icon: Icon }) => (
-          <section className="archive-shelf" key={title} aria-labelledby={title.replaceAll(' ', '-').toLowerCase()}>
-            <header className="archive-shelf-header">
-              <span className="archive-shelf-icon"><Icon size={20} strokeWidth={1.5} aria-hidden="true" /></span>
-              <div>
-                <p className="eyebrow">{eyebrow}</p>
-                <h2 id={title.replaceAll(' ', '-').toLowerCase()}>{title}</h2>
-              </div>
-              <span className="archive-status">{status}</span>
-            </header>
-            <p>{description}</p>
-            <ul className="archive-tags" aria-label={`Details saved with ${title}`}>
-              {items.map((item) => <li key={item}>{item}</li>)}
-            </ul>
-          </section>
-        ))}
+      <div className="archive-directory">
+        <ArchiveCollection id="portfolio-history" title="Portfolio history" description="Earlier portfolio editions that show how the presentation, design choices, and technical approach changed over time." items={portfolioHistory} />
+        <ArchiveCollection id="experiments" title="Experiments" description="Interactive builds and exploratory ideas kept for their process, personality, or lessons learned." items={experiments} />
       </div>
     </div>
   );

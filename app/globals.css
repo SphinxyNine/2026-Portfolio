@@ -515,15 +515,21 @@
   .resource-description { max-width: 48ch; color: var(--muted); font-size: 0.8rem; line-height: 1.55; }
   .archive-page .page-intro { padding-bottom: 2rem; }
   .archive-note { max-width: 72ch; margin-bottom: 2rem; padding: 1rem 0; border-block: 1px solid var(--line); color: var(--muted); font-size: 0.82rem; line-height: 1.65; }
-  .archive-shelves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
-  .archive-shelf { display: flex; min-height: 270px; flex-direction: column; padding: 1.3rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-  .archive-shelf-header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.85rem; align-items: start; }
-  .archive-shelf-icon { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--line); border-radius: 999px; color: var(--brand-jade); }
-  .archive-shelf h2 { margin-top: 0.35rem; font-size: 1.05rem; }
-  .archive-status { padding: 0.2rem 0.45rem; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.55rem; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
-  .archive-shelf > p { max-width: 52ch; margin-top: 1.4rem; color: var(--muted); font-size: 0.82rem; line-height: 1.65; }
-  .archive-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 1.5rem; }
-  .archive-tags li { padding: 0.25rem 0.55rem; border: 1px solid var(--line); border-radius: 4px; color: var(--text-soft); font-size: 0.68rem; }
+  .archive-directory { display: grid; gap: 4rem; }
+  .archive-collection { border-top: 1px solid var(--line); padding-top: 1.15rem; }
+  .archive-collection-heading { display: grid; grid-template-columns: minmax(180px, .6fr) minmax(0, 1fr); gap: 2rem; align-items: end; margin-bottom: 1.5rem; }
+  .archive-collection-heading h2 { margin-top: 0.35rem; font-size: 1.35rem; }
+  .archive-collection-heading > p { max-width: 58ch; color: var(--muted); font-size: 0.8rem; line-height: 1.6; }
+  .archive-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 0.8rem; }
+  .archive-entry { min-width: 0; }
+  .archive-entry-image { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .archive-entry-image img { object-fit: cover; transition: transform 260ms cubic-bezier(.2,.8,.2,1), filter 180ms ease; }
+  .archive-entry-image:hover img, .archive-entry-image:focus-visible img { transform: scale(1.018); filter: brightness(1.05); }
+  .archive-entry-content { display: grid; gap: 0.45rem; padding-top: 0.9rem; }
+  .archive-entry-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.58rem; letter-spacing: .04em; text-transform: uppercase; }
+  .archive-entry h3 { font-size: 1rem; }
+  .archive-entry-content > p { max-width: 54ch; color: var(--muted); font-size: 0.78rem; line-height: 1.6; }
+  .archive-entry .inline-link { margin-top: 0.35rem; }
   .case-study .back-link { margin-bottom: 2rem; }
   .case-study-header > p, .case-study-header > div > p { margin-top: 1rem; }
   .case-study-facts { margin: 2rem 0; }
@@ -633,10 +639,9 @@
     .resource-grid { grid-template-columns: 1fr; gap: 0; }
     .resource-grid a { min-height: 0; padding: 0.85rem 0; }
     .resource-grid li + li { border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent); }
-    .archive-shelves { grid-template-columns: 1fr; }
-    .archive-shelf { min-height: 250px; }
-    .archive-shelf-header { grid-template-columns: auto minmax(0, 1fr); }
-    .archive-status { grid-column: 2; width: fit-content; }
+    .archive-directory { gap: 3rem; }
+    .archive-collection-heading, .archive-grid { grid-template-columns: 1fr; }
+    .archive-collection-heading { gap: 0.7rem; }
     .lab-action-grid { grid-template-columns: 1fr; }
     .workflow-canvas { min-height: 300px; padding: 0.8rem; }
     .mock-landing-page { grid-template-columns: 1fr; }
