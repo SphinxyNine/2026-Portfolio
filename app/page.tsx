@@ -41,7 +41,6 @@ export default function HomePage() {
         <div className="hero-grid">
           <HeroPortraitCarousel portraits={profile.portraits} />
           <div className="hero-copy">
-            <p className="hero-kicker"><span aria-hidden="true" />Web, CRM & automation portfolio</p>
             <h1 className="hero-name" id="intro-heading">{profile.overviewName}</h1>
             <p className="hero-title">{profile.title}</p>
             <p className="hero-description">{profile.introduction}</p>

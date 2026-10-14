@@ -1,6 +1,5 @@
 'use client';
 
-import { RefreshCw } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -19,7 +18,7 @@ export function HeroPortraitCarousel({ portraits }: { portraits: readonly Portra
   }
 
   return (
-    <figure className={`hero-portrait hero-portrait--${activePortrait.treatment}`}>
+    <figure className="hero-portrait">
       <button
         className="hero-portrait-button"
         type="button"
@@ -39,11 +38,6 @@ export function HeroPortraitCarousel({ portraits }: { portraits: readonly Portra
             fetchPriority={index === 0 ? 'high' : 'auto'}
           />
         ))}
-        <span className="hero-portrait-hint" aria-hidden="true">
-          <RefreshCw size={12} />
-          Click to change
-          <span>{activeIndex + 1}/{portraits.length}</span>
-        </span>
       </button>
       <figcaption className="sr-only" aria-live="polite">Showing portrait {activeIndex + 1} of {portraits.length}.</figcaption>
     </figure>

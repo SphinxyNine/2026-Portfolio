@@ -175,8 +175,6 @@
   .hero-grid, .hero .overview-highlights { position: relative; z-index: 1; }
   .hero-grid { display: grid; grid-template-columns: minmax(300px, .92fr) minmax(0, 1.08fr); align-items: center; gap: clamp(2.8rem, 6vw, 5.5rem); }
   .hero-portrait { position: relative; isolation: isolate; display: grid; width: min(100%, 430px); aspect-ratio: 1 / 1; place-items: end center; overflow: visible; justify-self: center; }
-  .hero-portrait::before { content: ""; position: absolute; z-index: -2; inset: 13% 3% 1%; border-radius: 48% 52% 46% 54% / 42% 45% 55% 58%; background: linear-gradient(145deg, color-mix(in srgb, var(--brand-jade) 22%, var(--surface)), color-mix(in srgb, var(--brand-jade) 6%, var(--bg))); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--line-bright) 45%, transparent), 0 32px 70px color-mix(in srgb, var(--brand-jade) 12%, transparent); opacity: 1; transform: rotate(-3deg); transition: opacity 240ms ease; }
-  .hero-portrait--cutout::before { opacity: 0; }
   .hero-portrait::after { content: ""; position: absolute; z-index: -1; inset: 2% -5% 9% 7%; pointer-events: none; opacity: .48; border-radius: 50%; background-image: radial-gradient(circle, color-mix(in srgb, var(--line-bright) 58%, transparent) 1px, transparent 1.25px); background-size: 15px 15px; mask-image: linear-gradient(135deg, transparent 8%, #000 42%, transparent 82%); -webkit-mask-image: linear-gradient(135deg, transparent 8%, #000 42%, transparent 82%); }
   .hero-portrait-button { position: absolute; inset: 0; z-index: 1; display: block; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 48% 52% 46% 54% / 42% 45% 55% 58%; background: transparent; color: var(--text); cursor: pointer; }
   .hero-portrait-button:focus-visible { outline: 2px solid var(--brand-jade); outline-offset: 8px; }
@@ -185,17 +183,10 @@
   .hero-portrait-media--crop { object-fit: cover; clip-path: inset(3% round 48% 52% 46% 54% / 42% 45% 55% 58%); }
   .hero-portrait-media.is-active { opacity: 1; transform: translateY(1px) scale(1.025); }
   .hero-portrait-button:hover .hero-portrait-media.is-active { filter: drop-shadow(0 28px 30px color-mix(in srgb, #000 30%, transparent)); transform: translateY(-5px) scale(1.035); }
-  .hero-portrait-hint { position: absolute; right: 2%; bottom: 1%; z-index: 3; display: inline-flex; align-items: center; gap: .42rem; padding: .42rem .58rem; border: 1px solid var(--line-bright); border-radius: 999px; background: color-mix(in srgb, var(--surface) 90%, transparent); box-shadow: 0 8px 22px color-mix(in srgb, var(--bg) 45%, transparent); color: var(--text-soft); font-family: var(--font-geist-mono), monospace; font-size: .58rem; letter-spacing: .025em; backdrop-filter: blur(10px); transition: border-color 180ms ease, color 180ms ease, transform 180ms ease; }
-  .hero-portrait-hint > span { color: var(--muted); }
-  .hero-portrait-button:hover .hero-portrait-hint, .hero-portrait-button:focus-visible .hero-portrait-hint { border-color: var(--brand-jade); color: var(--text); transform: translateY(-3px); }
-  .hero-portrait-button:hover .hero-portrait-hint svg { transform: rotate(55deg); }
-  .hero-portrait-hint svg { transition: transform 260ms cubic-bezier(.2,.8,.2,1); }
   .hero-copy { min-width: 0; }
   .eyebrow, .section-index, .subsection-label { color: var(--muted); font-size: 0.72rem; line-height: 1.5; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; }
   .hero-copy > .eyebrow { display: flex; align-items: center; gap: 0.4rem; }
   .eyebrow span { margin: 0 0.45rem; }
-  .hero-kicker { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.85rem; color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: 0.64rem; letter-spacing: .07em; text-transform: uppercase; }
-  .hero-kicker > span { display: block; width: 7px; height: 7px; border-radius: 999px; background: var(--brand-jade); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-jade) 11%, transparent); }
   .hero-name { color: var(--brand-jade); }
   .hero h1 { color: inherit; font-family: var(--font-geist-mono), monospace; font-size: clamp(2.3rem, 1.56rem + 2.15vw, 3.55rem); font-weight: 500; letter-spacing: -0.06em; line-height: 1.06; }
   .hero-title { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.85rem; color: var(--text-soft); font-size: clamp(1.05rem, 0.91rem + 0.44vw, 1.3rem); font-weight: 500; line-height: 1.4; }
