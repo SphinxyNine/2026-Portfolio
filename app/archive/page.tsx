@@ -27,7 +27,7 @@ const portfolioHistory = [
     label: '2025 portfolio',
     description: 'A portfolio edition focused on clear, functional web experiences and a direct project-first introduction.',
     status: 'Archived edition',
-    image: '/projects/Archive-ZDXPortfolio.jpg',
+    image: '/projects/zetadevx.png',
     imageAlt: 'Zeta Dev X 2025 portfolio homepage',
     url: 'https://zdx2025portfolio.vercel.app/',
   },
