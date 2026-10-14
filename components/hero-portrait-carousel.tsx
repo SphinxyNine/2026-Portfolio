@@ -19,7 +19,7 @@ export function HeroPortraitCarousel({ portraits }: { portraits: readonly Portra
   }
 
   return (
-    <figure className="hero-portrait">
+    <figure className={`hero-portrait hero-portrait--${activePortrait.treatment}`}>
       <button
         className="hero-portrait-button"
         type="button"
