@@ -11,8 +11,12 @@ export const profile = {
   name: 'Zy Fausto', shortName: 'Zy Fausto', overviewName: 'Zyron Jade Fausto',
   title: 'Web Developer & Automation Specialist',
   expertise: ['Web Development', 'Funnels', 'CRM', 'Automation'],
-  location: 'Philippines', photo: '/profile/zy-image-landing.png',
-  photoAlt: 'Halftone portrait of Zy Fausto wearing a cap and glasses',
+  location: 'Philippines',
+  portraits: [
+    { src: '/profile/zy-image-landing.png', alt: 'Halftone portrait of Zy Fausto wearing a cap and glasses', treatment: 'cutout' as const },
+    { src: '/profile/zy-image-landing-1.jpg', alt: 'Pixel art portrait of Zy Fausto wearing a cap and glasses', treatment: 'crop' as const },
+    { src: '/profile/zy-image-landing-2.jpeg', alt: 'Illustrated portrait of Zy Fausto with a green abstract background', treatment: 'crop' as const },
+  ],
   email: 'jade.fausto17@gmail.com',
   resume: '', // Add only the updated, approved résumé.
   introduction: "I turn business requirements into responsive websites and practical automation systems—from landing pages and funnels to CRM workflows, tracking, and integrations.",

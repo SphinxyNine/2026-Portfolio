@@ -11,9 +11,9 @@ import {
   SearchCheck,
   Workflow,
 } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { GitHubContributions } from '@/components/github-contributions';
+import { HeroPortraitCarousel } from '@/components/hero-portrait-carousel';
 import {
   credentials,
   experience,
@@ -39,9 +39,7 @@ export default function HomePage() {
     <div className="page home-page">
       <section id="introduction" className="hero" aria-labelledby="intro-heading" tabIndex={-1}>
         <div className="hero-grid">
-          <figure className="hero-portrait">
-            <Image src={profile.photo} alt={profile.photoAlt} fill sizes="(max-width: 700px) 80vw, 380px" priority fetchPriority="high" />
-          </figure>
+          <HeroPortraitCarousel portraits={profile.portraits} />
           <div className="hero-copy">
             <p className="hero-kicker"><span aria-hidden="true" />Web, CRM & automation portfolio</p>
             <h1 className="hero-name" id="intro-heading">{profile.overviewName}</h1>
