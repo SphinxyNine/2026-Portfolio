@@ -9,7 +9,6 @@ import { ViewCollection } from './view-collection';
 export function ProjectsContent() {
   return (
     <>
-      <p className="section-note">Selected client work. Entries without approved details remain clearly marked as provisional.</p>
       <ViewCollection storageKey="projects" countLabel={`${enabledProjects.length} selected projects`}>
         <div className="project-grid">
           {enabledProjects.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} />)}
@@ -25,7 +24,7 @@ export function TechStackContent() {
         <div className="stack-row" key={group.title}>
           <h3>{group.title}</h3>
           <div>
-            <TagList items={group.items} />
+             <TagList items={group.items} />
             {!!group.pending.length && (
               <details className="pending-tools">
                 <summary>Additional tools to confirm</summary>
