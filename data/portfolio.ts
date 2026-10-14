@@ -22,7 +22,7 @@ export const profile = {
   socials: { linkedin: 'https://linkedin.com/in/zyron-fausto/', github: 'https://github.com/SphinxyNine' },
   seo: {
     description: 'Portfolio of Zy Fausto, a web developer and automation specialist working with websites, funnels, CRM systems, integrations, and digital automation.',
-    canonical: 'https://professional-portfolio.golivedigital-jz.chatgpt.site',
+    canonical: 'https://2026-portfolio-snowy.vercel.app/',
   },
 };
 
