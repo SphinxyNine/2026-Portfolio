@@ -282,6 +282,10 @@ export const credentials: Credential[] = [
   { name: 'Bachelor of Science in Computer Science', provider: 'Pamantasan ng Lungsod ng Muntinlupa', year: 'August 2022', credentialURL: '', certificateImage: '', type: 'Education' },
 ];
 export const enabledProjects = projects.filter((project) => project.enabled && project.visibility !== 'private');
+export const selectedWorkSlugs = ['morocco-expedition', 'novectus-medical', 'golive-digital'] as const;
+export const selectedWorkProjects = selectedWorkSlugs
+  .map((slug) => enabledProjects.find((project) => project.slug === slug))
+  .filter((project): project is Project => project !== undefined);
 export const caseStudyProjects = enabledProjects;
 export function getProject(slug: string) {
   return caseStudyProjects.find((project) => project.slug === slug);

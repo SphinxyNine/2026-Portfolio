@@ -3,9 +3,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Award,
-  ChartNoAxesCombined,
   GraduationCap,
-  MonitorUp,
   Music2,
   Network,
   SearchCheck,
@@ -14,6 +12,7 @@ import {
 import Link from 'next/link';
 import { GitHubContributions } from '@/components/github-contributions';
 import { HeroPortraitCarousel } from '@/components/hero-portrait-carousel';
+import { SelectedWorkCarousel } from '@/components/selected-work-carousel';
 import {
   credentials,
   experience,
@@ -21,10 +20,9 @@ import {
   overviewHighlights,
   plannedPosts,
   profile,
-  projects,
+  selectedWorkProjects,
 } from '@/data/portfolio';
 
-const featuredProject = projects.find((project) => !project.placeholder)!;
 const featuredExperience = [experience[0], experience[1], experience[3]];
 const featuredStack = ['GoHighLevel', 'React', 'JavaScript', 'CRM workflows', 'GA4', 'GTM', 'Node.js', 'MongoDB'];
 
@@ -63,25 +61,7 @@ export default function HomePage() {
           <h2 id="featured-work-heading">Selected work</h2>
           <Link className="inline-link section-link" href="/work">All projects <ArrowRight size={14} /></Link>
         </header>
-        <article className="featured-project">
-          <div className="featured-project-copy">
-            <p className="eyebrow">{featuredProject.category} <span>·</span> {featuredProject.year}</p>
-            <p className="project-client">{featuredProject.client}</p>
-            <h3>{featuredProject.title}</h3>
-            <p>{featuredProject.summary}</p>
-            <ul className="tag-list compact-tags" aria-label="Tools used">
-              {featuredProject.tools.slice(0, 6).map((tool) => <li key={tool}>{tool}</li>)}
-            </ul>
-            <Link className="inline-link" href={`/work/${featuredProject.slug}`}>View case study <ArrowRight size={14} /></Link>
-          </div>
-          <div className="project-system" aria-label="Project implementation areas">
-            <div className="system-node"><MonitorUp size={19} aria-hidden="true" /><span>Responsive campaign pages</span></div>
-            <span className="system-connector" aria-hidden="true" />
-            <div className="system-node"><Workflow size={19} aria-hidden="true" /><span>CRM and booking workflows</span></div>
-            <span className="system-connector" aria-hidden="true" />
-            <div className="system-node"><ChartNoAxesCombined size={19} aria-hidden="true" /><span>Analytics and attribution</span></div>
-          </div>
-        </article>
+        <SelectedWorkCarousel projects={selectedWorkProjects} />
       </section>
 
       <section className="home-section" aria-labelledby="experience-preview-heading">
