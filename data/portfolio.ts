@@ -13,8 +13,8 @@ export const profile = {
   expertise: ['Web Development', 'Funnels', 'CRM', 'Automation'],
   location: 'Philippines',
   portraits: [
-    { src: '/profile/zy-image-landing.png', alt: 'Halftone portrait of Zy Fausto wearing a cap and glasses', treatment: 'cutout' as const },
     { src: '/profile/zy-image-landing-2.png', alt: 'Illustrated portrait of Zy Fausto with a green abstract background', treatment: 'cutout' as const },
+    { src: '/profile/zy-image-landing.png', alt: 'Halftone portrait of Zy Fausto wearing a cap and glasses', treatment: 'cutout' as const },
   ],
   email: 'jade.fausto17@gmail.com',
   resume: '', // Add only the updated, approved résumé.
