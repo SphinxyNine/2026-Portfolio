@@ -1,6 +1,6 @@
 import { ArrowRight, ArrowUpRight, ImageIcon } from 'lucide-react';
 import Link from 'next/link';
-import type { Project } from '@/data/portfolio';
+import { projectTypeLabels, type Project } from '@/data/portfolio';
 import { ProjectImagePreview } from '@/components/project-image-preview';
 import { TagList } from '@/components/tag-list';
 import { isSafeExternalUrl } from '@/lib/links';
@@ -21,6 +21,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       </div>
       <div className="project-card-content">
         <p className="project-client">{project.client}</p>
+        <span className="project-kind">{projectTypeLabels[project.projectType]}</span>
         <h3>{project.title}</h3>
         <p className="project-category">{project.category}</p>
         {project.summary && <p>{project.summary}</p>}

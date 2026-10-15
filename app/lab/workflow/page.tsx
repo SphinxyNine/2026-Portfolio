@@ -1,18 +1,12 @@
 import type { Metadata } from 'next';
-import { AutomationPlayground } from '@/components/automation-playground';
-import { PageIntro } from '@/components/page-intro';
+import { RetiredLab } from '@/components/retired-lab';
 
 export const metadata: Metadata = {
-  title: 'Build a Workflow',
-  description: 'Build and run a small CRM automation workflow in Zy Fausto’s interactive portfolio lab.',
-  alternates: { canonical: '/lab/workflow/' },
+  title: 'Projects',
+  robots: { index: false, follow: true },
+  alternates: { canonical: '/work/' },
 };
 
 export default function WorkflowLabPage() {
-  return (
-    <div className="page lab-page">
-      <PageIntro eyebrow="Interactive lab" title="Build a Workflow" description="Choose an event, add automation steps, and run a simple CRM workflow." />
-      <AutomationPlayground />
-    </div>
-  );
+  return <RetiredLab />;
 }

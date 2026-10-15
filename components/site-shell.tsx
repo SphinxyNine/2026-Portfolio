@@ -1,6 +1,6 @@
 'use client';
 
-import { Archive, ArrowRight, BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Layers3, Music2, PackageOpen, SearchCheck, ShoppingBag, Workflow, Wrench } from 'lucide-react';
+import { Archive, ArrowRight, BookOpenText, BriefcaseBusiness, ClefBass, FileBadge, Layers3, Music2, PackageOpen, ShoppingBag, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
@@ -25,8 +25,6 @@ const explore = [
 
 const lab = [
   { label: 'Play the keys', icon: Music2, route: '/lab/piano' },
-  { label: 'Build a workflow', icon: Workflow, route: '/lab/workflow' },
-  { label: 'Fix the funnel', icon: SearchCheck, route: '/lab/funnel' },
 ];
 
 function SocialLinks() {

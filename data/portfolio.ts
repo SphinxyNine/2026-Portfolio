@@ -1,9 +1,22 @@
 export type ProjectVisibility = 'public' | 'limited' | 'private';
+export type ProjectCategory = 'web' | 'funnels-crm' | 'automation';
+export type ProjectType = 'client' | 'internal' | 'automation-lab';
+export const projectTypeLabels: Record<ProjectType, string> = {
+  client: 'Client Project', internal: 'Internal System', 'automation-lab': 'Automation Lab',
+};
+export type ProjectScreenshot = { src: string; alt: string; caption?: string };
+export type WorkflowDiagram = {
+  caption: string;
+  steps: { label: string; branches?: string[] }[];
+};
 export type Project = {
   slug: string; enabled: boolean; placeholder: boolean; visibility: ProjectVisibility;
   title: string; client: string; year: string; category: string; summary: string;
   role: string; responsibilities: string[]; tools: string[];
-  screenshots: { src: string; alt: string }[];
+  categories: ProjectCategory[]; projectType: ProjectType;
+  screenshots: ProjectScreenshot[];
+  workflowDiagram?: WorkflowDiagram;
+  demoUrl?: string; githubUrl?: string; status?: string;
   liveUrl: string; caseStudyUrl: string; sections: { title: string; body: string }[];
 };
 
@@ -41,7 +54,8 @@ export const plannedPosts = [
 export const projects: Project[] = [
   {
     slug: 'bgsa-corporate-events', enabled: true, placeholder: false, visibility: 'public',
-    title: 'Corporate Events Funnel', client: 'Bear Grylls Survival Academy', year: '2026', category: 'GoHighLevel · Funnels & CRM',
+    categories: ['funnels-crm', 'automation'], projectType: 'client',
+    title: 'Corporate Events Funnel', client: 'Bear Grylls Survival Academy', year: '2026', category: 'GoHighLevel · Funnels · CRM & Automation',
     summary: 'A campaign experience for corporate team-building events, with clear paths to book a discovery call or request a brochure.',
     role: 'Web & Automation Specialist',
     responsibilities: [
@@ -53,14 +67,20 @@ export const projects: Project[] = [
     tools: ['GoHighLevel', 'HTML', 'CSS', 'JavaScript', 'CRM Workflows', 'GA4', 'GTM'],
     screenshots: [{ src: '/projects/BGSA-Event-PreviewPhoto.jpg', alt: 'Bear Grylls Survival Academy corporate events landing page' }],
     liveUrl: 'https://events.beargryllssurvivalacademy.com/', caseStudyUrl: '',
+    workflowDiagram: {
+      caption: 'Simplified view of the inquiry and follow-up journey; no customer records are shown.',
+      steps: [{ label: 'Campaign visitor' }, { label: 'Choose inquiry path', branches: ['Discovery call', 'Brochure inquiry'] }, { label: 'CRM follow-up workflow' }],
+    },
     sections: [
       { title: 'Overview', body: 'The page introduces the corporate team-building experience and gives visitors direct routes to a discovery call and brochure.' },
+      { title: 'Problem', body: 'The campaign needed clear inquiry paths connected to CRM follow-up, alongside its public event information.' },
       { title: 'Implementation', body: 'I worked on the GoHighLevel page build, responsive sections, inquiry flow, and tracking setup as part of the client implementation.' },
     ],
   },
   {
     slug: 'morocco-expedition', enabled: true, placeholder: false, visibility: 'public',
-    title: 'Morocco Expedition Funnel', client: 'Bear Grylls Survival Academy', year: '2026', category: 'GoHighLevel · Funnels & CRM',
+    categories: ['funnels-crm', 'automation'], projectType: 'client',
+    title: 'Morocco Expedition Funnel', client: 'Bear Grylls Survival Academy', year: '2026', category: 'GoHighLevel · Funnels · CRM & Automation',
     summary: 'A responsive expedition campaign and reservation journey for the Sahara to Summit experience in Morocco.',
     role: 'Web & Automation Specialist',
     responsibilities: [
@@ -73,13 +93,19 @@ export const projects: Project[] = [
     tools: ['GoHighLevel', 'HTML', 'CSS', 'JavaScript', 'CRM Workflows', 'GA4', 'GTM'],
     screenshots: [{ src: '/projects/BGSA-Expedition-PreviewPhoto.jpg', alt: 'Bear Grylls Survival Academy Morocco expedition landing page' }],
     liveUrl: 'https://morocco.expedition.beargryllssurvivalacademy.com/', caseStudyUrl: '',
+    workflowDiagram: {
+      caption: 'High-level view of the implemented campaign workflows. Branches summarize responsibilities, not the exact internal configuration.',
+      steps: [{ label: 'Expedition inquiry' }, { label: 'GoHighLevel CRM workflow', branches: ['CRM tags', 'Lead notifications', 'Follow-ups', 'Booking flow'] }, { label: 'Campaign measurement', branches: ['GA4 / GTM events', 'UTM attribution'] }],
+    },
     sections: [
       { title: 'Overview', body: 'The campaign presents the eight-day Sahara to Summit trip, its itinerary, preparation details, and a reservation enquiry path.' },
+      { title: 'Problem', body: 'The expedition needed a connected reservation journey with CRM follow-up and campaign attribution across its supporting pages.' },
       { title: 'Implementation', body: 'My work covered responsive GoHighLevel pages, booking and lead flows, content updates, and conversion tracking.' },
     ],
   },
   {
     slug: 'golive-digital', enabled: true, placeholder: false, visibility: 'public',
+    categories: ['web'], projectType: 'internal',
     title: 'GoLive Digital Website', client: 'GoLive Digital Solutions', year: '2026', category: 'Web development',
     summary: 'An agency website introducing web, funnel, and automation services with a clear path for project inquiries.',
     role: 'Founder & Web Developer',
@@ -98,6 +124,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'novectus-medical', enabled: true, placeholder: false, visibility: 'public',
+    categories: ['web'], projectType: 'client',
     title: 'Novectus Official Website', client: 'Novectus Medical Corporation', year: '', category: 'Web development',
     summary: 'A responsive corporate website presenting the medical company, its products, and contact information.',
     role: 'Freelance Web Developer',
@@ -116,6 +143,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'actigraft', enabled: true, placeholder: false, visibility: 'public',
+    categories: ['web'], projectType: 'client',
     title: 'ActiGraft Product Page', client: 'Novectus Medical Corporation', year: '', category: 'Web development',
     summary: 'A dedicated product page explaining the ActiGraft wound-care system and guiding visitors to contact the team.',
     role: 'Freelance Web Developer',
@@ -134,6 +162,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'linkfreight-express', enabled: true, placeholder: false, visibility: 'public',
+    categories: ['web'], projectType: 'client',
     title: 'Linkfreight Express Website', client: 'Linkfreight Express International', year: '', category: 'Web development',
     summary: 'A freight company website presenting logistics services and a direct route to request a quote.',
     role: 'Freelance Web Developer',
@@ -152,6 +181,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'airbridge-freight', enabled: true, placeholder: false, visibility: 'public',
+    categories: ['web'], projectType: 'client',
     title: 'Airbridge Freight Website', client: 'Airbridge Freight International', year: '', category: 'Web development',
     summary: 'A responsive logistics website highlighting freight services and making quote requests easy to find.',
     role: 'Freelance Web Developer',
@@ -170,6 +200,7 @@ export const projects: Project[] = [
   },
   {
     slug: '5keyssolution-company-website', enabled: true, placeholder: false, visibility: 'public',
+    categories: ['web'], projectType: 'client',
     title: '5KeysSolution Company Website', client: '5KeysSolution', year: '', category: 'Web development',
     summary: 'A responsive business website presenting the company story, services, and contact pathways.',
     role: 'Web Developer',
@@ -188,6 +219,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'homebuddy-ph', enabled: true, placeholder: false, visibility: 'public',
+    categories: ['automation'], projectType: 'client',
     title: 'HomeBuddy Chat Automation', client: 'HomeBuddy PH', year: '', category: 'Chat automation',
     summary: 'A Facebook Messenger flow that helps visitors find service information and routes common questions through an interactive menu.',
     role: 'Automation Builder',
@@ -198,13 +230,19 @@ export const projects: Project[] = [
     ],
     tools: ['ManyChat', 'Facebook Messenger', 'Conversation Flows', 'Automation'],
     screenshots: [
-      { src: '/projects/HomeBuddy-PreviewPhoto.jpg', alt: 'HomeBuddy Facebook page and Messenger conversation' },
-      { src: '/projects/Homebuddy-Automation-PreviewPhoto.jpg', alt: 'HomeBuddy welcome and main-menu automation in ManyChat' },
+      { src: '/projects/HomeBuddy-PreviewPhoto.jpg', alt: 'HomeBuddy Facebook page and Messenger conversation', caption: 'HomeBuddy page and the Messenger entry point.' },
+      { src: '/projects/Homebuddy-Automation-PreviewPhoto.jpg', alt: 'HomeBuddy welcome and main-menu automation in ManyChat', caption: 'Welcome and main-menu flow in the ManyChat builder.' },
     ],
     liveUrl: 'https://www.facebook.com/profile.php?id=61591516410705', caseStudyUrl: '',
+    workflowDiagram: {
+      caption: 'Simplified conversation structure based on the published welcome and main-menu flow.',
+      steps: [{ label: 'Customer' }, { label: 'Facebook Messenger' }, { label: 'ManyChat welcome menu' }, { label: 'Choose intent', branches: ['Service information', 'Common questions'] }, { label: 'Linked conversation path' }],
+    },
     sections: [
       { title: 'Overview', body: 'The automation gives Facebook visitors a guided way to ask about HomeBuddy services directly in Messenger.' },
-      { title: 'Flow', body: 'A welcome menu branches into common questions and service paths, keeping the conversation organized for both visitors and the team.' },
+      { title: 'Problem', body: 'Visitors needed a guided way to find service information and answers to common questions within Messenger.' },
+      { title: 'Implementation', body: 'I built the welcome and main-menu automation in ManyChat, linked the question and service paths, and connected the published flow to the Facebook page.' },
+      { title: 'Delivered', body: 'A published Messenger automation with a welcome menu and linked conversation paths. The screenshots show the page experience and the flow builder.' },
     ],
   },
 ];
@@ -280,7 +318,8 @@ export const skills = [
   {
     title: 'Automation',
     description: 'Follow-ups and guided conversations for customer inquiries.',
-    items: ['ManyChat', 'Facebook Messenger', 'Automated follow-ups', 'Tags', 'Lead notifications'],
+    items: ['GoHighLevel', 'ManyChat', 'CRM workflows', 'Facebook Messenger', 'Automated follow-ups', 'Tags', 'Lead notifications'],
+    learning: ['n8n', 'Make', 'Webhooks', 'API integrations'],
   },
   {
     title: 'Analytics & tracking',

@@ -6,8 +6,6 @@ import {
   GraduationCap,
   Music2,
   Network,
-  SearchCheck,
-  Workflow,
 } from 'lucide-react';
 import Link from 'next/link';
 import { GitHubContributions } from '@/components/github-contributions';
@@ -139,20 +137,6 @@ export default function HomePage() {
             <h3>Play Pocket Keys</h3>
             <p>Tap a one-octave piano, shift its range, or play it with your keyboard.</p>
             <span className="inline-link">Play piano <span className="motion-icon"><ArrowRight size={14} aria-hidden="true" /></span></span>
-          </Link>
-          <Link className="home-lab-card animated-control" href="/lab/workflow">
-            <span className="home-lab-icon"><Workflow size={21} strokeWidth={1.5} aria-hidden="true" /></span>
-            <p className="eyebrow">Automation playground</p>
-            <h3>Build a Workflow</h3>
-            <p>Choose a trigger, connect CRM actions, and run the automation.</p>
-            <span className="inline-link">Open lab <span className="motion-icon"><ArrowRight size={14} aria-hidden="true" /></span></span>
-          </Link>
-          <Link className="home-lab-card animated-control" href="/lab/funnel">
-            <span className="home-lab-icon"><SearchCheck size={21} strokeWidth={1.5} aria-hidden="true" /></span>
-            <p className="eyebrow">UX challenge</p>
-            <h3>Fix the Funnel</h3>
-            <p>Find four weak points in a sample landing page and improve them.</p>
-            <span className="inline-link">Start challenge <span className="motion-icon"><ArrowRight size={14} aria-hidden="true" /></span></span>
           </Link>
         </div>
       </section>

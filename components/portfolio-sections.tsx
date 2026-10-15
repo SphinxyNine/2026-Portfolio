@@ -2,20 +2,12 @@ import { ArrowUpRight, Award, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
 import { credentials, enabledProjects, experience, experiencePeriod, skills } from '@/data/portfolio';
 import { isSafeExternalUrl } from '@/lib/links';
-import { ProjectCard } from './project-card';
+import { ProjectsCollection } from './projects-collection';
 import { TagList } from './tag-list';
 import { ViewCollection } from './view-collection';
 
 export function ProjectsContent() {
-  return (
-    <>
-      <ViewCollection storageKey="projects" countLabel={`${enabledProjects.length} selected projects`}>
-        <div className="project-grid">
-          {enabledProjects.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} />)}
-        </div>
-      </ViewCollection>
-    </>
-  );
+  return <ProjectsCollection projects={enabledProjects} />;
 }
 export function TechStackContent() {
   return (
@@ -26,6 +18,7 @@ export function TechStackContent() {
           <div>
             <p className="stack-description">{group.description}</p>
             <TagList items={group.items} />
+            {group.learning && <div className="stack-learning"><p className="subsection-label">Currently building with · Learning & practice</p><TagList items={group.learning} /></div>}
           </div>
         </div>
       ))}
