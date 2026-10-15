@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { ArrowUpRight } from 'lucide-react';
-import Image from 'next/image';
+import { SkeletonImage } from '@/components/skeleton-image';
 import { PageIntro } from '@/components/page-intro';
 
 const portfolioHistory = [
@@ -56,7 +56,7 @@ function ArchiveCollection({ id, title, description, items }: { id: string; titl
         {items.map((item) => (
           <article className="archive-entry" key={item.url}>
             <a className="archive-entry-image" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${item.title}`}>
-              <Image src={item.image} alt={item.imageAlt} fill sizes="(max-width: 700px) 100vw, 50vw" />
+              <SkeletonImage src={item.image} alt={item.imageAlt} sizes="(max-width: 700px) 100vw, 50vw" />
             </a>
             <div className="archive-entry-content">
               <div className="archive-entry-meta"><span>{item.label}</span><span>{item.status}</span></div>

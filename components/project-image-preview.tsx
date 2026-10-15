@@ -1,7 +1,7 @@
 'use client';
 
 import { Expand, X } from 'lucide-react';
-import Image from 'next/image';
+import { SkeletonImage } from './skeleton-image';
 import { useRef } from 'react';
 
 type Screenshot = { src: string; alt: string };
@@ -17,12 +17,12 @@ export function ProjectImagePreview({ screenshot, title }: { screenshot: Screens
         aria-label={`Enlarge preview of ${title}`}
         onClick={() => dialogRef.current?.showModal()}
       >
-        <Image src={screenshot.src} alt={screenshot.alt} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 520px" />
+        <SkeletonImage src={screenshot.src} alt={screenshot.alt} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 520px" />
         <span className="project-preview-hint" aria-hidden="true"><Expand size={14} /> Preview image</span>
       </button>
       <div className="project-preview-hover" aria-hidden="true">
         <div className="project-preview-hover-image">
-          <Image src={screenshot.src} alt="" fill sizes="(max-width: 900px) 90vw, 760px" />
+          <SkeletonImage src={screenshot.src} alt="" sizes="(max-width: 900px) 90vw, 760px" />
         </div>
         <p>{title}</p>
       </div>
@@ -39,7 +39,7 @@ export function ProjectImagePreview({ screenshot, title }: { screenshot: Screens
           <button type="button" aria-label="Close image preview" onClick={() => dialogRef.current?.close()}><X size={18} /></button>
         </div>
         <div className="project-preview-dialog-image">
-          <Image src={screenshot.src} alt={screenshot.alt} fill sizes="(max-width: 700px) 95vw, 1000px" />
+          <SkeletonImage src={screenshot.src} alt={screenshot.alt} sizes="(max-width: 700px) 95vw, 1000px" />
         </div>
       </dialog>
     </>

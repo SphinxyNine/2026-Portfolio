@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import { SkeletonImage } from './skeleton-image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import type { CSSProperties, PointerEvent as ReactPointerEvent, KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent } from 'react';
@@ -124,7 +124,7 @@ export function SelectedWorkCarousel({ projects }: { projects: readonly Project[
               <div className="coverflow-card-content" aria-hidden={!active}>
                 {screenshot && (
                   <div className="coverflow-image">
-                    <Image src={screenshot.src} alt={active ? screenshot.alt : ''} fill sizes="(max-width: 700px) 90vw, 660px" draggable={false} />
+                    <SkeletonImage src={screenshot.src} alt={active ? screenshot.alt : ''} sizes="(max-width: 700px) 90vw, 660px" draggable={false} />
                   </div>
                 )}
                 <div className="coverflow-copy">
