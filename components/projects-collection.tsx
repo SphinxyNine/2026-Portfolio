@@ -17,7 +17,7 @@ export function ProjectsCollection({ projects }: { projects: Project[] }) {
   const visible = projects.filter((project) => filter === 'all' || project.categories.includes(filter));
   return (
     <>
-      <div className="project-filters view-toggle" role="group" aria-label="Filter projects by category">
+      <div className="project-filters" role="group" aria-label="Filter projects by category">
         {filters.map(({ value, label }) => (
           <button key={value} type="button" aria-pressed={filter === value} aria-controls="project-results" onClick={() => setFilter(value)}>{label}</button>
         ))}
