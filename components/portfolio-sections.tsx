@@ -24,13 +24,8 @@ export function TechStackContent() {
         <div className="stack-row" key={group.title}>
           <h3>{group.title}</h3>
           <div>
-             <TagList items={group.items} />
-            {!!group.pending.length && (
-              <details className="pending-tools">
-                <summary>Additional tools to confirm</summary>
-                <p>{group.pending.join(' · ')}</p>
-              </details>
-            )}
+            <p className="stack-description">{group.description}</p>
+            <TagList items={group.items} />
           </div>
         </div>
       ))}

@@ -15,6 +15,7 @@ import { HeroPortraitCarousel } from '@/components/hero-portrait-carousel';
 import { SelectedWorkCarousel } from '@/components/selected-work-carousel';
 import {
   credentials,
+  coreStack,
   experience,
   experiencePeriod,
   overviewHighlights,
@@ -24,8 +25,6 @@ import {
 } from '@/data/portfolio';
 
 const featuredExperience = [experience[0], experience[1], experience[3]];
-const featuredStack = ['GoHighLevel', 'React', 'JavaScript', 'CRM workflows', 'GA4', 'GTM', 'Node.js', 'MongoDB'];
-
 const credentialIcons = {
   Certification: Award,
   Training: Network,
@@ -85,7 +84,7 @@ export default function HomePage() {
             <Link className="inline-link" href="/skills">View all <ArrowRight size={14} /></Link>
           </div>
           <ul className="tag-list home-stack-tags" aria-label="Core tools">
-            {featuredStack.map((tool) => <li key={tool}>{tool}</li>)}
+            {coreStack.map((tool) => <li key={tool}>{tool}</li>)}
           </ul>
         </div>
       </section>

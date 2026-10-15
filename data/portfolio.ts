@@ -264,13 +264,34 @@ export function experiencePeriod(item: Experience) {
   return `From ${item.startDate}`;
 }
 
+export const coreStack = ['GoHighLevel', 'React', 'Next.js', 'TypeScript', 'ManyChat', 'GA4', 'GTM', 'Node.js'];
+
 export const skills = [
-  { title: 'Web development', items: ['HTML', 'CSS', 'JavaScript', 'React', 'Node.js', 'MongoDB', 'Git', 'GitHub'], pending: [] as string[] },
-  { title: 'Funnels & CRM', items: ['GoHighLevel', 'Landing pages', 'Forms', 'CRM workflows', 'Pipelines'], pending: [] as string[] },
-  { title: 'Automation & integration', items: ['Business automation', 'Integrations', 'Lead routing', 'Automated follow-ups'], pending: ['ManyChat', 'Webhooks', 'Google Sheets', 'API integrations'] },
-  { title: 'Analytics', items: ['Google Analytics 4', 'Google Tag Manager', 'UTM tracking', 'Conversion tracking'], pending: ['Meta Pixel'] },
-  { title: 'Design / development tools', items: ['Figma', 'Postman'], pending: ['VS Code', 'Notion', 'Lovable'] },
-  { title: 'Other web platforms', items: ['Shopify', 'WordPress', 'Webflow', 'Framer'], pending: [] as string[] },
+  {
+    title: 'Web development',
+    description: 'Responsive client websites and application frontends.',
+    items: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Vite', 'Node.js', 'MongoDB'],
+  },
+  {
+    title: 'Funnels & CRM',
+    description: 'Campaign pages and the lead journeys behind them.',
+    items: ['GoHighLevel', 'Landing pages', 'Forms', 'Booking flows', 'Pipelines', 'CRM workflows', 'Lead routing'],
+  },
+  {
+    title: 'Automation',
+    description: 'Follow-ups and guided conversations for customer inquiries.',
+    items: ['ManyChat', 'Facebook Messenger', 'Automated follow-ups', 'Tags', 'Lead notifications'],
+  },
+  {
+    title: 'Analytics & tracking',
+    description: 'Measurement for campaign and conversion journeys.',
+    items: ['Google Analytics 4', 'Google Tag Manager', 'UTM tracking', 'Conversion events'],
+  },
+  {
+    title: 'Design & delivery',
+    description: 'Tools used to design, build, and ship the work.',
+    items: ['Figma', 'Postman', 'Git', 'GitHub'],
+  },
 ];
 export type Credential = {
   name: string; provider: string; year: string; credentialURL: string;

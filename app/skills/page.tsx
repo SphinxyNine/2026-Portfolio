@@ -3,13 +3,13 @@ import { PageIntro } from '@/components/page-intro';
 import { TechStackContent } from '@/components/portfolio-sections';
 
 export const metadata: Metadata = {
-  title: 'Tech Stack', description: 'Technologies and tools, grouped by the work they support.',
+  title: 'Tech Stack', description: 'The development, CRM, automation, and tracking tools behind my client work.',
   alternates: { canonical: '/skills/' },
 };
 export default function Page() {
   return (
     <div className="page">
-      <PageIntro eyebrow="Portfolio" title="Tech Stack" description="Technologies and tools, grouped by the work they support." />
+      <PageIntro eyebrow="Portfolio" title="Tech Stack" description="The development, CRM, automation, and tracking tools behind my client work." />
       <TechStackContent />
     </div>
   );
