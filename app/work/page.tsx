@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 export default function Page() {
   return (
-    <div className="page">
+    <div className="page projects-page">
       <PageIntro eyebrow="Portfolio" title="Projects" description="Selected client work across websites, funnels, CRM systems, and automation." />
       <ProjectsContent />
     </div>

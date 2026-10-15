@@ -115,6 +115,7 @@ export default function HomePage() {
           <h2 id="build-log-heading">Build log</h2>
           <Link className="inline-link section-link" href="/blog">View blog <ArrowRight size={14} /></Link>
         </header>
+        <p className="section-note">Planned topics — articles are in progress.</p>
         <div className="post-list">
           {plannedPosts.map((post) => (
             <article className="post-row" key={post.title}>
